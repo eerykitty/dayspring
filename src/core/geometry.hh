@@ -1,4 +1,7 @@
 #pragma once
-class geometry
+namespace stoicheon
 {
-};
+	class geometry
+	{
+	};
+}

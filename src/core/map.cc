@@ -1,7 +1,9 @@
 #include "map.hh"
+#include "item.hh"
 
- cell::cell()
- {
-         x = 500;
-         y = 500;
- }
+namespace map
+{
+	cell::cell()
+	{
+	}
+}

@@ -1,4 +1,7 @@
 #pragma once
-class item
+namespace stoicheon
 {
-};
+	class item
+	{
+	};
+}
