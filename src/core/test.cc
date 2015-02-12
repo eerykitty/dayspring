@@ -6,6 +6,7 @@
 int main(int argc, char** argv)
 {
 	map::cell test_cell;
-	test_cell.items[mkcoord (1, 1)] = new stoicheon::item;
+	test_cell.place (new stoicheon::item, 1, 1);
+
 	return 0;
 }

@@ -1,6 +1,8 @@
 #pragma once
-#include <unordered_map>
+#include <map>
 #include <utility>
+#include <list>
+#include <memory>
 
 #include "types.hh"
 #include "item.hh"
@@ -16,15 +18,24 @@
 namespace map {
 	class cell
 	{
-		public:
-			std::unordered_map <coordinate, stoicheon::item*>       items;
-			std::unordered_map <coordinate, stoicheon::entity*>     entities;
-			std::unordered_map <coordinate, stoicheon::geometry*>   geometries;
+		private:
+			std::map <coordinate, std::shared_ptr<std::list<stoicheon::item*>>>       items;
+			/*std::unordered_multimap <coordinate, stoicheon::entity*>     entities;
+			std::unordered_multimap <coordinate, stoicheon::geometry*>   geometries;*/
 
-			//public:
+			std::list <stoicheon::item*> interior_items;
+			/*std::list <stoicheon::entity*> interior_entities;
+			std::list <stoicheon::geometry*> interior_geometries;*/
+
+		public:
 			cell();
-			void retrieve (stoicheon::item*, int x, int y);
-			void retrieve (stoicheon::entity*, int x, int y);
-			void retrieve (stoicheon::geometry*, int x, int y);
+
+			std::shared_ptr<std::list<stoicheon::item*>> retrieve_items (int x, int y);
+			/*void retrieve (int x, int y);
+			void retrieve (int x, int y);*/
+
+			void place	(stoicheon::item* to_put,	int x, int y);
+			/*void place	(stoicheon::entity* to_put,	int x, int y);
+			void place	(stoicheon::geometry* to_put,	int x, int y);*/
 	};
 }
