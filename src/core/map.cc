@@ -12,7 +12,7 @@ namespace map
 	{
 		if (items[mkcoord (x, y)].use_count () == 0)
 		{
-			items[mkcoord (x, y)] = std::make_shared<std::list<stoicheon::item*>>();
+			//items[mkcoord (x, y)] = std::make_shared<std::list<stoicheon::item*>>();
 		}
 		return items[mkcoord (x, y)];
 	}
