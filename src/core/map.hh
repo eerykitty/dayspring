@@ -20,18 +20,20 @@ namespace map {
 	class cell
 	{
 		private:
-			std::unordered_map <coordinate, std::shared_ptr<std::list<stoicheon::item*>>>       items;
-			/*std::unordered_multimap <coordinate, stoicheon::entity*>     entities;
-			std::unordered_multimap <coordinate, stoicheon::geometry*>   geometries;*/
+			std::unordered_map <coordinate, std::list<stoicheon::item*>>       items;
+			std::unordered_map <coordinate, std::list<stoicheon::entity*>>     entities;
+			std::unordered_map <coordinate, std::list<stoicheon::geometry*>>   geometries;
 
 			std::list <stoicheon::item*> interior_items;
-			/*std::list <stoicheon::entity*> interior_entities;
-			std::list <stoicheon::geometry*> interior_geometries;*/
+			std::list <stoicheon::entity*> interior_entities;
+			std::list <stoicheon::geometry*> interior_geometries;
 
 		public:
 			cell();
 
-			std::shared_ptr<std::list<stoicheon::item*>> retrieve_items (int x, int y);
+			std::list<stoicheon::item*>*            retrieve_items (int x, int y);
+                        std::list<stoicheon::entity*>*          retrieve_entities (int x, int y);
+                        std::list<stoicheon::geometry*>*        retrieve_geometries (int x, int y);
 			/*void retrieve (int x, int y);
 			void retrieve (int x, int y);*/
 
