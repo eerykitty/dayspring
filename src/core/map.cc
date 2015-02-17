@@ -5,14 +5,14 @@ namespace map
 {
 	cell::cell()
 	{
-		
+
 	}
 
 	std::shared_ptr<std::list<stoicheon::item*>> cell::retrieve_items (int x, int y)
 	{
 		if (items[mkcoord (x, y)].use_count () == 0)
 		{
-			//items[mkcoord (x, y)] = std::make_shared<std::list<stoicheon::item*>>();
+			items[mkcoord (x, y)] = std::make_shared<std::list<stoicheon::item*>>();
 		}
 		return items[mkcoord (x, y)];
 	}
@@ -26,7 +26,11 @@ namespace map
 
 	void cell::place (stoicheon::item* to_put, int x, int y)
 	{
-		//items.emplace (mkcoord (x, y), to_put);
+                if (items[mkcoord (x, y)].use_count () == 0)
+                {
+                        items[mkcoord (x, y)] = std::make_shared<std::list<stoicheon::item*>>();
+                }
+		items[mkcoord (x, y)]->push_front (to_put);
 	}
 	/*void cell::place (stoicheon::entity* to_put, int x, int y)
 	{

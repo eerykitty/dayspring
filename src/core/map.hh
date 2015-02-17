@@ -1,8 +1,9 @@
 #pragma once
-#include <map>
+#include <unordered_map>
 #include <utility>
 #include <list>
 #include <memory>
+#include <functional>
 
 #include "types.hh"
 #include "item.hh"
@@ -19,7 +20,7 @@ namespace map {
 	class cell
 	{
 		private:
-			std::map <coordinate, std::shared_ptr<std::list<stoicheon::item*>>>       items;
+			std::unordered_map <coordinate, std::shared_ptr<std::list<stoicheon::item*>>>       items;
 			/*std::unordered_multimap <coordinate, stoicheon::entity*>     entities;
 			std::unordered_multimap <coordinate, stoicheon::geometry*>   geometries;*/
 
