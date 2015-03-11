@@ -3,5 +3,8 @@ namespace stoicheon
 {
 	class item
 	{
+                private:
+
+                public:
 	};
 }

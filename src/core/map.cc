@@ -33,13 +33,14 @@ namespace map
 		items[mkcoord (x, y)].push_front (to_put);
                 interior_items.push_front (to_put);
 	}
-	/*void cell::place (stoicheon::entity* to_put, int x, int y)
-	{
-		entities.emplace (mkcoord (x, y), to_put);
-	}
-	void cell::place (stoicheon::geometry* to_put, int x, int y)
-	{
-		geometries.emplace (mkcoord (x, y), to_put);
-	}*/
-
+        void cell::place (stoicheon::entity* to_put, int x, int y)
+        {
+                entities[mkcoord (x, y)].push_front (to_put);
+                interior_entities.push_front (to_put);
+        }
+        void cell::place (stoicheon::geometry* to_put, int x, int y)
+        {
+                geometries[mkcoord (x, y)].push_front (to_put);
+                interior_geometries.push_front (to_put);
+        }
 }

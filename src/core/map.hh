@@ -38,7 +38,7 @@ namespace map {
 			void retrieve (int x, int y);*/
 
 			void place	(stoicheon::item* to_put,	int x, int y);
-			/*void place	(stoicheon::entity* to_put,	int x, int y);
-			void place	(stoicheon::geometry* to_put,	int x, int y);*/
+			void place	(stoicheon::entity* to_put,	int x, int y);
+			void place	(stoicheon::geometry* to_put,	int x, int y);
 	};
 }
