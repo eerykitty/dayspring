@@ -1,17 +1,26 @@
-/*
- * Contains the primary server class.
- */
-
+#pragma once
 #include <chrono>
 #include <ratio>
+#include <ctime>
+#include <string>
+#include <iomanip>
+#include <thread>
+
+#include "console.hh"
+
+typedef std::chrono::high_resolution_clock se_clock;
 
 class sentinel
 {
 	private:
-		std::chrono::milliseconds tick;
+                std::chrono::high_resolution_clock::time_point start, tp;
+                unsigned int interval;
 
 	public:	
+                std::string format_time (std::chrono::high_resolution_clock::time_point t);
 		void set_tick_interval (unsigned int count);
+                void main ();
+                sentinel (unsigned int count);
 };
 
 class dayspring_server
