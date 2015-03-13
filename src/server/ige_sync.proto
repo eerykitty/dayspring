@@ -1,0 +1,38 @@
+package ige;
+
+message SendEpoch {
+        required int32 sec = 1;
+        required int32 min = 2;
+        required int32 hour = 3;
+        required int32 day = 4;
+        required int32 mon = 5;
+        required int32 year = 6;
+}
+
+message Timestamp {
+        required int64 time = 1;
+}
+
+message Geometry {
+        required int32 id = 1;
+        required int32 x = 2;
+        required int32 y = 3;
+}
+
+message Entity {
+        required int32 id = 1;
+        required int32 x = 2;
+        required int32 y = 3;
+}
+
+message Item {
+        required int32 id = 1;
+        required int32 x = 2;
+        required int32 y = 3;
+}
+
+message Sync {
+        repeated Geometry geometries = 1;
+        repeated Entity entities = 2;
+        repeated Item items = 3;
+}
