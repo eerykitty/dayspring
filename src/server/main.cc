@@ -3,11 +3,14 @@
 #include <iostream>
 
 #include "server.hh"
+#include "ll_network.hh"
 
 int main (int argc, char** argv)
 {
         sentinel sent (1);
         std::thread sentinel_thread (&sentinel::main, &sent);
+
+        ll_net net ("tcp://127.0.0.1:5555");
 
         sentinel_thread.join ();
 
