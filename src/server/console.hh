@@ -12,4 +12,5 @@ namespace console {
 
         void notify (std::string input);
         void t_notify (std::string thread_name, std::string input);
+        void t_error (std::string thread_name, std::string input);
 }
