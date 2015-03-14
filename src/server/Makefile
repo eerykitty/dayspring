@@ -19,11 +19,11 @@ utility.o: utility.cc
 	g++ -c -std=c++11 utility.cc -g
 
 ll_network.o: ll_network.cc
-	g++ -c -std=c++11 ll_network.cc -g
+	g++ -c -std=c++11 ll_network.cc -g 
 
 ige_sync.pb.o: ige_sync.pb.cc
 	protoc --cpp_out=./ ige_sync.proto
-	g++ -c -std=c++11 ige_sync.pb.cc -pthread -g 
+	g++ -c -std=c++11 ige_sync.pb.cc -pthread  -g
 player.o: player.cc
 	g++ -c -std=c++11 player.cc -g
 

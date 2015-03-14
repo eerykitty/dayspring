@@ -17,8 +17,6 @@ ll_net::ll_net (sentinel* main_sentinel, std::string endpoint, enet_uint16 port)
                 enet_address_set_host (&address, endpoint.c_str());
         address.port = port;
 
-        id = 0;
-
         max_clients = 20;
         bandwith_up = 0;
         bandwith_down = 0;
@@ -37,20 +35,24 @@ ll_net::ll_net (sentinel* main_sentinel, std::string endpoint, enet_uint16 port)
 ll_net::~ll_net ()
 {
         console::t_notify ("NET", "shutting down net");
-        // let's close out any remaining connections...
-        while(connections.size() > 0)
+        console::t_notify ("NET", std::to_string (connections.size ()) + " clients remaining, sending disconnect signals...");
+        int clients = connections.size ();
+        for (auto it = connections.begin (); it != connections.end (); it++)
         {
-                auto con = connections.begin ();
-                int type;
-                enet_peer_disconnect (con->second.peer, 0);
-                while (!(type = enet_host_service (server, &event, 1000) > 0) && event.type != ENET_EVENT_TYPE_DISCONNECT)
-                {
-                        if (type == 0)
-                                enet_packet_destroy (event.packet);
-                }
-                console::t_notify ("NET", "Client " + std::to_string (con->second.id) + " disconnected.");
-                connections.erase (con->first);
+                enet_peer_disconnect (it->second.peer, 0);
         }
+        int disconnects = 0;
+        while (enet_host_service (server, &event, 500) > 0)
+        {
+                if (event.type == ENET_EVENT_TYPE_RECEIVE)
+                        enet_packet_destroy (event.packet);
+                else if (event.type == ENET_EVENT_TYPE_DISCONNECT)
+                {
+                        console::t_notify ("NET", std::to_string (((connection*)(event.peer -> data))->id) + " has disconnected.");
+                        disconnects++;
+                }
+        }
+        console::t_notify ("NET", std::to_string (clients - disconnects) + " clients left, hopefully that's it.");
         enet_host_destroy (server);
         enet_deinitialize ();
 }
@@ -66,31 +68,28 @@ void ll_net::main ()
                         {
                                 case ENET_EVENT_TYPE_CONNECT:
                                         connection new_connection;
-                                        new_connection.id = generate_id ();
+                                        new_connection.id = event.peer -> connectID;
                                         new_connection.peer = event.peer;
-                                        connections[event.peer -> address.host] = new_connection;
+                                        connections[event.peer -> connectID] = new_connection;
+                                        event.peer -> data = &connections[event.peer -> connectID];
                                         console::t_notify ("NET", "Client " + std::to_string (new_connection.id) + " connected.");
                                         break;
 
                                 case ENET_EVENT_TYPE_RECEIVE:
+                                        console::t_notify ("NET", "received packet from " + std::to_string (event.peer -> connectID));
                                         printf ("%s\n", event.packet -> data);
+                                        if (strcmp ((const char*)(event.packet -> data), "END") == 0)
+                                                sent->shutdown ();
                                         enet_packet_destroy (event.packet);
-                                        sent->shutdown ();
                                         break ;
 
                                 case ENET_EVENT_TYPE_DISCONNECT:
-                                        console::t_notify ("NET", "Client " + std::to_string (connections[event.peer -> address.host].id) + " disconnected.");
-                                        connections.erase (event.peer -> address.host);
+                                        console::t_notify ("NET", "Client " + std::to_string (connections[event.peer -> connectID].id) + " disconnected.");
+                                        connections.erase (event.peer -> connectID);
                                         break;
                         }
                 }
                 if (sent->close_server)
                         return;
         }
-}
-
-unsigned int ll_net::generate_id ()
-{
-        id++;
-        return id;
 }

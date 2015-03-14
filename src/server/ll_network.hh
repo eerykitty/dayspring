@@ -19,7 +19,7 @@
 
 struct connection
 {
-        unsigned int id;
+        std::uint32_t id;
         ENetPeer* peer;
 };
 
@@ -34,9 +34,6 @@ class ll_net
                 int channel_count;
                 int bandwith_up;
                 int bandwith_down;
-
-                unsigned int id;
-                unsigned int generate_id ();
 
                 std::map<std::uint32_t, connection> connections;
 
