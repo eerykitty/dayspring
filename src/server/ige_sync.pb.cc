@@ -20,6 +20,10 @@ namespace ige {
 
 namespace {
 
+const ::google::protobuf::Descriptor* Command_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  Command_reflection_ = NULL;
+const ::google::protobuf::EnumDescriptor* Command_command_type_descriptor_ = NULL;
 const ::google::protobuf::Descriptor* SendEpoch_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   SendEpoch_reflection_ = NULL;
@@ -48,7 +52,23 @@ void protobuf_AssignDesc_ige_5fsync_2eproto() {
     ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
       "ige_sync.proto");
   GOOGLE_CHECK(file != NULL);
-  SendEpoch_descriptor_ = file->message_type(0);
+  Command_descriptor_ = file->message_type(0);
+  static const int Command_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Command, command_id_),
+  };
+  Command_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      Command_descriptor_,
+      Command::default_instance_,
+      Command_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Command, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Command, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(Command));
+  Command_command_type_descriptor_ = Command_descriptor_->enum_type(0);
+  SendEpoch_descriptor_ = file->message_type(1);
   static const int SendEpoch_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SendEpoch, sec_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SendEpoch, min_),
@@ -68,7 +88,7 @@ void protobuf_AssignDesc_ige_5fsync_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(SendEpoch));
-  Timestamp_descriptor_ = file->message_type(1);
+  Timestamp_descriptor_ = file->message_type(2);
   static const int Timestamp_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Timestamp, time_),
   };
@@ -83,7 +103,7 @@ void protobuf_AssignDesc_ige_5fsync_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Timestamp));
-  Geometry_descriptor_ = file->message_type(2);
+  Geometry_descriptor_ = file->message_type(3);
   static const int Geometry_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Geometry, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Geometry, x_),
@@ -100,7 +120,7 @@ void protobuf_AssignDesc_ige_5fsync_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Geometry));
-  Entity_descriptor_ = file->message_type(3);
+  Entity_descriptor_ = file->message_type(4);
   static const int Entity_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Entity, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Entity, x_),
@@ -117,7 +137,7 @@ void protobuf_AssignDesc_ige_5fsync_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Entity));
-  Item_descriptor_ = file->message_type(4);
+  Item_descriptor_ = file->message_type(5);
   static const int Item_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Item, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Item, x_),
@@ -134,7 +154,7 @@ void protobuf_AssignDesc_ige_5fsync_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Item));
-  Sync_descriptor_ = file->message_type(5);
+  Sync_descriptor_ = file->message_type(6);
   static const int Sync_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sync, geometries_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sync, entities_),
@@ -164,6 +184,8 @@ inline void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    Command_descriptor_, &Command::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     SendEpoch_descriptor_, &SendEpoch::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     Timestamp_descriptor_, &Timestamp::default_instance());
@@ -180,6 +202,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
 }  // namespace
 
 void protobuf_ShutdownFile_ige_5fsync_2eproto() {
+  delete Command::default_instance_;
+  delete Command_reflection_;
   delete SendEpoch::default_instance_;
   delete SendEpoch_reflection_;
   delete Timestamp::default_instance_;
@@ -201,24 +225,28 @@ void protobuf_AddDesc_ige_5fsync_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\016ige_sync.proto\022\003ige\"[\n\tSendEpoch\022\013\n\003se"
-    "c\030\001 \002(\005\022\013\n\003min\030\002 \002(\005\022\014\n\004hour\030\003 \002(\005\022\013\n\003da"
-    "y\030\004 \002(\005\022\013\n\003mon\030\005 \002(\005\022\014\n\004year\030\006 \002(\005\"\031\n\tTi"
-    "mestamp\022\014\n\004time\030\001 \002(\003\",\n\010Geometry\022\n\n\002id\030"
-    "\001 \002(\005\022\t\n\001x\030\002 \002(\005\022\t\n\001y\030\003 \002(\005\"*\n\006Entity\022\n\n"
-    "\002id\030\001 \002(\005\022\t\n\001x\030\002 \002(\005\022\t\n\001y\030\003 \002(\005\"(\n\004Item\022"
-    "\n\n\002id\030\001 \002(\005\022\t\n\001x\030\002 \002(\005\022\t\n\001y\030\003 \002(\005\"b\n\004Syn"
-    "c\022!\n\ngeometries\030\001 \003(\0132\r.ige.Geometry\022\035\n\010"
-    "entities\030\002 \003(\0132\013.ige.Entity\022\030\n\005items\030\003 \003"
-    "(\0132\t.ige.Item", 373);
+    "\n\016ige_sync.proto\022\003ige\"V\n\007Command\022-\n\ncomm"
+    "and_id\030\001 \002(\0162\031.ige.Command.command_type\""
+    "\034\n\014command_type\022\014\n\010SHUTDOWN\020\000\"[\n\tSendEpo"
+    "ch\022\013\n\003sec\030\001 \002(\005\022\013\n\003min\030\002 \002(\005\022\014\n\004hour\030\003 \002"
+    "(\005\022\013\n\003day\030\004 \002(\005\022\013\n\003mon\030\005 \002(\005\022\014\n\004year\030\006 \002"
+    "(\005\"\031\n\tTimestamp\022\014\n\004time\030\001 \002(\003\",\n\010Geometr"
+    "y\022\n\n\002id\030\001 \002(\005\022\t\n\001x\030\002 \002(\005\022\t\n\001y\030\003 \002(\005\"*\n\006E"
+    "ntity\022\n\n\002id\030\001 \002(\005\022\t\n\001x\030\002 \002(\005\022\t\n\001y\030\003 \002(\005\""
+    "(\n\004Item\022\n\n\002id\030\001 \002(\005\022\t\n\001x\030\002 \002(\005\022\t\n\001y\030\003 \002("
+    "\005\"b\n\004Sync\022!\n\ngeometries\030\001 \003(\0132\r.ige.Geom"
+    "etry\022\035\n\010entities\030\002 \003(\0132\013.ige.Entity\022\030\n\005i"
+    "tems\030\003 \003(\0132\t.ige.Item", 461);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ige_sync.proto", &protobuf_RegisterTypes);
+  Command::default_instance_ = new Command();
   SendEpoch::default_instance_ = new SendEpoch();
   Timestamp::default_instance_ = new Timestamp();
   Geometry::default_instance_ = new Geometry();
   Entity::default_instance_ = new Entity();
   Item::default_instance_ = new Item();
   Sync::default_instance_ = new Sync();
+  Command::default_instance_->InitAsDefaultInstance();
   SendEpoch::default_instance_->InitAsDefaultInstance();
   Timestamp::default_instance_->InitAsDefaultInstance();
   Geometry::default_instance_->InitAsDefaultInstance();
@@ -234,6 +262,240 @@ struct StaticDescriptorInitializer_ige_5fsync_2eproto {
     protobuf_AddDesc_ige_5fsync_2eproto();
   }
 } static_descriptor_initializer_ige_5fsync_2eproto_;
+
+// ===================================================================
+
+const ::google::protobuf::EnumDescriptor* Command_command_type_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return Command_command_type_descriptor_;
+}
+bool Command_command_type_IsValid(int value) {
+  switch(value) {
+    case 0:
+      return true;
+    default:
+      return false;
+  }
+}
+
+#ifndef _MSC_VER
+const Command_command_type Command::SHUTDOWN;
+const Command_command_type Command::command_type_MIN;
+const Command_command_type Command::command_type_MAX;
+const int Command::command_type_ARRAYSIZE;
+#endif  // _MSC_VER
+#ifndef _MSC_VER
+const int Command::kCommandIdFieldNumber;
+#endif  // !_MSC_VER
+
+Command::Command()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void Command::InitAsDefaultInstance() {
+}
+
+Command::Command(const Command& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void Command::SharedCtor() {
+  _cached_size_ = 0;
+  command_id_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+Command::~Command() {
+  SharedDtor();
+}
+
+void Command::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void Command::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* Command::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return Command_descriptor_;
+}
+
+const Command& Command::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_ige_5fsync_2eproto();
+  return *default_instance_;
+}
+
+Command* Command::default_instance_ = NULL;
+
+Command* Command::New() const {
+  return new Command;
+}
+
+void Command::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    command_id_ = 0;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool Command::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required .ige.Command.command_type command_id = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::ige::Command_command_type_IsValid(value)) {
+            set_command_id(static_cast< ::ige::Command_command_type >(value));
+          } else {
+            mutable_unknown_fields()->AddVarint(1, value);
+          }
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void Command::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required .ige.Command.command_type command_id = 1;
+  if (has_command_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->command_id(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* Command::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required .ige.Command.command_type command_id = 1;
+  if (has_command_id()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      1, this->command_id(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int Command::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required .ige.Command.command_type command_id = 1;
+    if (has_command_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->command_id());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void Command::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const Command* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const Command*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void Command::MergeFrom(const Command& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_command_id()) {
+      set_command_id(from.command_id());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void Command::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void Command::CopyFrom(const Command& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Command::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+
+  return true;
+}
+
+void Command::Swap(Command* other) {
+  if (other != this) {
+    std::swap(command_id_, other->command_id_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata Command::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = Command_descriptor_;
+  metadata.reflection = Command_reflection_;
+  return metadata;
+}
+
 
 // ===================================================================
 

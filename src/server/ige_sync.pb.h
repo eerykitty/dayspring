@@ -23,6 +23,7 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/extension_set.h>
+#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 
@@ -33,6 +34,7 @@ void  protobuf_AddDesc_ige_5fsync_2eproto();
 void protobuf_AssignDesc_ige_5fsync_2eproto();
 void protobuf_ShutdownFile_ige_5fsync_2eproto();
 
+class Command;
 class SendEpoch;
 class Timestamp;
 class Geometry;
@@ -40,7 +42,130 @@ class Entity;
 class Item;
 class Sync;
 
+enum Command_command_type {
+  Command_command_type_SHUTDOWN = 0
+};
+bool Command_command_type_IsValid(int value);
+const Command_command_type Command_command_type_command_type_MIN = Command_command_type_SHUTDOWN;
+const Command_command_type Command_command_type_command_type_MAX = Command_command_type_SHUTDOWN;
+const int Command_command_type_command_type_ARRAYSIZE = Command_command_type_command_type_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* Command_command_type_descriptor();
+inline const ::std::string& Command_command_type_Name(Command_command_type value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    Command_command_type_descriptor(), value);
+}
+inline bool Command_command_type_Parse(
+    const ::std::string& name, Command_command_type* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<Command_command_type>(
+    Command_command_type_descriptor(), name, value);
+}
 // ===================================================================
+
+class Command : public ::google::protobuf::Message {
+ public:
+  Command();
+  virtual ~Command();
+
+  Command(const Command& from);
+
+  inline Command& operator=(const Command& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Command& default_instance();
+
+  void Swap(Command* other);
+
+  // implements Message ----------------------------------------------
+
+  Command* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const Command& from);
+  void MergeFrom(const Command& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  typedef Command_command_type command_type;
+  static const command_type SHUTDOWN = Command_command_type_SHUTDOWN;
+  static inline bool command_type_IsValid(int value) {
+    return Command_command_type_IsValid(value);
+  }
+  static const command_type command_type_MIN =
+    Command_command_type_command_type_MIN;
+  static const command_type command_type_MAX =
+    Command_command_type_command_type_MAX;
+  static const int command_type_ARRAYSIZE =
+    Command_command_type_command_type_ARRAYSIZE;
+  static inline const ::google::protobuf::EnumDescriptor*
+  command_type_descriptor() {
+    return Command_command_type_descriptor();
+  }
+  static inline const ::std::string& command_type_Name(command_type value) {
+    return Command_command_type_Name(value);
+  }
+  static inline bool command_type_Parse(const ::std::string& name,
+      command_type* value) {
+    return Command_command_type_Parse(name, value);
+  }
+
+  // accessors -------------------------------------------------------
+
+  // required .ige.Command.command_type command_id = 1;
+  inline bool has_command_id() const;
+  inline void clear_command_id();
+  static const int kCommandIdFieldNumber = 1;
+  inline ::ige::Command_command_type command_id() const;
+  inline void set_command_id(::ige::Command_command_type value);
+
+  // @@protoc_insertion_point(class_scope:ige.Command)
+ private:
+  inline void set_has_command_id();
+  inline void clear_has_command_id();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  int command_id_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_ige_5fsync_2eproto();
+  friend void protobuf_AssignDesc_ige_5fsync_2eproto();
+  friend void protobuf_ShutdownFile_ige_5fsync_2eproto();
+
+  void InitAsDefaultInstance();
+  static Command* default_instance_;
+};
+// -------------------------------------------------------------------
 
 class SendEpoch : public ::google::protobuf::Message {
  public:
@@ -676,6 +801,33 @@ class Sync : public ::google::protobuf::Message {
 
 // ===================================================================
 
+// Command
+
+// required .ige.Command.command_type command_id = 1;
+inline bool Command::has_command_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void Command::set_has_command_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void Command::clear_has_command_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void Command::clear_command_id() {
+  command_id_ = 0;
+  clear_has_command_id();
+}
+inline ::ige::Command_command_type Command::command_id() const {
+  return static_cast< ::ige::Command_command_type >(command_id_);
+}
+inline void Command::set_command_id(::ige::Command_command_type value) {
+  assert(::ige::Command_command_type_IsValid(value));
+  set_has_command_id();
+  command_id_ = value;
+}
+
+// -------------------------------------------------------------------
+
 // SendEpoch
 
 // required int32 sec = 1;
@@ -1134,6 +1286,10 @@ Sync::mutable_items() {
 namespace google {
 namespace protobuf {
 
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::ige::Command_command_type>() {
+  return ::ige::Command_command_type_descriptor();
+}
 
 }  // namespace google
 }  // namespace protobuf

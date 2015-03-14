@@ -48,7 +48,7 @@ ll_net::~ll_net ()
                         enet_packet_destroy (event.packet);
                 else if (event.type == ENET_EVENT_TYPE_DISCONNECT)
                 {
-                        //console::t_notify ("LLNET", std::to_string (**(((connection**)(event.peer -> data)))->id) + " has disconnected."); i'm too tired to fix this
+                        console::t_notify ("LLNET", std::to_string (LL_CXN->id) + " has disconnected.");
                         disconnects++;
                 }
         }
@@ -68,32 +68,54 @@ void ll_net::main ()
                         {
                                 case ENET_EVENT_TYPE_CONNECT:
                                         {
-                                                connection* new_connection = new connection;
-                                                new_connection->id = event.peer -> connectID;
-                                                new_connection->peer = event.peer;
-                                                connections[event.peer -> connectID] = new_connection;
-                                                event.peer -> data = &connections[event.peer -> connectID];
-                                                console::t_notify ("LLNET", "Client " + std::to_string (new_connection->id) + " connected.");
+                                                new_connection (event);
                                         }
                                         break;
 
                                 case ENET_EVENT_TYPE_RECEIVE:
-                                        console::t_notify ("LLNET", "received packet from " + std::to_string (event.peer -> connectID));
+                                {
                                         printf ("%s\n", event.packet -> data);
                                         if (strcmp ((const char*)(event.packet -> data), "END") == 0)
                                                 sent->shutdown ();
                                         enet_packet_destroy (event.packet);
-                                        break ;
+                                }
+                                break ;
 
                                 case ENET_EVENT_TYPE_DISCONNECT:
-                                        console::t_notify ("LLNET", "Client " + std::to_string (connections[event.peer -> connectID]->id) + " disconnected.");
-                                        connections.erase (event.peer -> connectID);
-                                        break;
+                                {
+                                        destroy_connection (event);
+                                }
+                                break;
                         }
                 }
                 if (sent->close_server)
                         return;
         }
+}
+
+message::message (ENetPacket* packet)
+{
+        id = *((uint32_t*)packet->data);
+        data = (void*)((uint32_t*)(packet->data)+1);
+        length = packet->dataLength - sizeof(id);
+        reliable = (packet->flags == ENET_PACKET_FLAG_RELIABLE ? true : false);
+}
+
+message::message (std::string string)
+{
+        id = NET_PACKET_STRING;
+        const char* data = string.c_str ();
+        size_t length = string.length() + 1;
+        char* payload = (char*)malloc (sizeof(char) * length);
+        strcpy (payload, data);
+        this->length = length;
+        data = payload;
+        reliable = true;
+}
+
+message::message ()
+{
+        // *crickets chirping*
 }
 
 void connection::queue_message (message* msg)
@@ -111,11 +133,35 @@ void connection::flush_message_queue ()
                 auto msg = message_queue.front ();
                 void* data = malloc(msg->length + sizeof(msg->id));
                 memcpy (data, &msg->id, sizeof(msg->id));
-                memcpy ((uint32_t*)data + sizeof(msg->id), msg->data, msg->length);
+                memcpy ((uint32_t*)data + 1, msg->data, msg->length);
                 ENetPacket* packet = enet_packet_create (data, msg->length + sizeof(msg->id), (msg->reliable == true ? ENET_PACKET_FLAG_RELIABLE : 0));
                 enet_peer_send (peer, 0, packet);
                 free (msg->data);
                 delete [] msg;
                 message_queue.pop ();
         }
+}
+
+void ll_net::new_connection (ENetEvent event)
+{
+        connection* new_connection = new connection;
+        new_connection->id = event.peer -> connectID;
+        new_connection->peer = event.peer;
+        connections[event.peer -> connectID] = new_connection;
+        event.peer -> data = new_connection;
+        console::t_notify ("LLNET", "Client " + std::to_string (LL_CXN->id) + " connected.");
+}
+
+void ll_net::destroy_connection (ENetEvent event)
+{
+        console::t_notify ("LLNET", "Client " + std::to_string (LL_CXN->id) + " disconnected.");
+        connections.erase (event.peer -> connectID);
+}
+
+void ll_net::process_packet (ENetEvent event)
+{
+        printf ("%s\n", event.packet -> data);
+        if (strcmp ((const char*)(event.packet -> data), "END") == 0)
+                sent->shutdown ();
+        enet_packet_destroy (event.packet);
 }

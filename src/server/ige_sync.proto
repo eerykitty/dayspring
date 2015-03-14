@@ -1,5 +1,13 @@
 package ige;
 
+message Command {
+        enum command_type {
+                SHUTDOWN = 0;
+        }
+
+        required command_type command_id = 1;
+}
+
 message SendEpoch {
         required int32 sec = 1;
         required int32 min = 2;
