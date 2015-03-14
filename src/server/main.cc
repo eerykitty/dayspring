@@ -4,15 +4,19 @@
 
 #include "server.hh"
 #include "ll_network.hh"
+#include "console.hh"
 
 int main (int argc, char** argv)
 {
         sentinel sent (1);
-        std::thread sentinel_thread (&sentinel::main, &sent);
+        ll_net net ("127.0.0.1", 1234);
+        //std::thread sentinel_thread (&sentinel::main, &sent);
 
-        ll_net net ("tcp://127.0.0.1:5555");
+        console::t_notify ("MAIN", "Starting networking subsystem.");
+        std::thread net_thread (&ll_net::main, &net);
 
-        sentinel_thread.join ();
+        //sentinel_thread.join ();
+        net_thread.join ();
 
 	/*using std::chrono::high_resolution_clock;
         auto tick = std::chrono::seconds (1);

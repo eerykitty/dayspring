@@ -20,6 +20,7 @@ class ll_net
         private:
                 ENetAddress address;
                 ENetHost* server;
+                ENetEvent event;
         
                 int max_clients;
                 int channel_count;
@@ -27,6 +28,8 @@ class ll_net
                 int bandwith_down;
 
         public:
-                ll_net (std::string endpoint, enet_uint16 port);
+                ll_net (std::string endpoint = "", enet_uint16 port = 5125);
                 ~ll_net ();
+
+                void main ();
 };
