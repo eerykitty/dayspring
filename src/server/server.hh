@@ -5,6 +5,7 @@
 #include <string>
 #include <iomanip>
 #include <thread>
+#include <mutex>
 
 #include "console.hh"
 
@@ -18,7 +19,11 @@ class sentinel
                 std::tm* start_tm;
                 unsigned int interval;
 
+                std::mutex exit_mutex;
+
 	public:	
+                void shutdown ();
+                bool close_server;
                 static std::string format_time (std::chrono::high_resolution_clock::time_point t);
 		void set_tick_interval (unsigned int count);
                 void main ();

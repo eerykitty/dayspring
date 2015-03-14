@@ -3,6 +3,8 @@
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <map>
+#include <cstdint>
 
 #include <stdio.h>
 #include <string.h>
@@ -14,6 +16,12 @@
 
 #define CERT_PATH (char*)"server_certificate"
 #define CLIENT_CERT_DIR (char*)"client_cert"
+
+struct connection
+{
+        unsigned int id;
+        ENetPeer* peer;
+};
 
 class ll_net
 {
@@ -27,8 +35,15 @@ class ll_net
                 int bandwith_up;
                 int bandwith_down;
 
+                unsigned int id;
+                unsigned int generate_id ();
+
+                std::map<std::uint32_t, connection> connections;
+
+                sentinel* sent;
+
         public:
-                ll_net (std::string endpoint = "", enet_uint16 port = 5125);
+                ll_net (sentinel* main_sentinel, std::string endpoint = "", enet_uint16 port = 5125);
                 ~ll_net ();
 
                 void main ();

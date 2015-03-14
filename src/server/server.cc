@@ -24,6 +24,7 @@ std::string sentinel::format_time (std::chrono::high_resolution_clock::time_poin
 
 void sentinel::main ()
 {
+        close_server = false;
         start = se_clock::now ();
         start_t = se_clock::to_time_t (start);
         start_tm = std::gmtime (&start_t);
@@ -49,10 +50,8 @@ void sentinel::main ()
                 /*
                  * Tock!
                  */
-                console::notify ("tock?");
                 if (se_clock::now () < tp)
                 {
-                        console::notify ("halp?");
                         std::this_thread::sleep_until (tp);
                 }
                 else
@@ -62,5 +61,13 @@ void sentinel::main ()
                         
                        console::t_notify ("SENTINEL", "tick/tock off schedule; system overloaded or clock changed. Go fix it."); 
                 }
+                if (close_server)
+                        return;
         }
+}
+
+void sentinel::shutdown ()
+{
+        std::lock_guard<std::mutex> lock (exit_mutex);
+        close_server = true;
 }
