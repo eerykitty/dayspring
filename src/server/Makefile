@@ -1,10 +1,16 @@
-all: server
+all: server client
+
+client: client_main.o server.o console.o ige_sync.pb.o utility.o network.o player.o flags.o auth.o
+	g++ -std=c++11 -lenet -lprotobuf -o client client_main.o server.o console.o network.o utility.o flags.o auth.o ige_sync.pb.o -pthread -g
 
 server: main.o server.o console.o ige_sync.pb.o utility.o network.o player.o flags.o auth.o
 	g++ -std=c++11 -lenet -lprotobuf -o server main.o server.o console.o network.o utility.o flags.o auth.o ige_sync.pb.o -pthread -g
 
 main.o: main.cc
 	g++ -c -std=c++11 main.cc -pthread -g
+
+client_main.o: client_main.cc
+	g++ -c -std=c++11 client_main.cc -pthread -g
 
 server.o: server.cc
 	g++ -c -std=c++11 server.cc -pthread -g

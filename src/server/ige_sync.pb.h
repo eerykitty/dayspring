@@ -36,6 +36,7 @@ void protobuf_ShutdownFile_ige_5fsync_2eproto();
 
 class Command;
 class Login;
+class LoginSuccess;
 class SendEpoch;
 class Timestamp;
 class Geometry;
@@ -267,6 +268,88 @@ class Login : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static Login* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LoginSuccess : public ::google::protobuf::Message {
+ public:
+  LoginSuccess();
+  virtual ~LoginSuccess();
+
+  LoginSuccess(const LoginSuccess& from);
+
+  inline LoginSuccess& operator=(const LoginSuccess& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const LoginSuccess& default_instance();
+
+  void Swap(LoginSuccess* other);
+
+  // implements Message ----------------------------------------------
+
+  LoginSuccess* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const LoginSuccess& from);
+  void MergeFrom(const LoginSuccess& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int64 login_hash = 1;
+  inline bool has_login_hash() const;
+  inline void clear_login_hash();
+  static const int kLoginHashFieldNumber = 1;
+  inline ::google::protobuf::int64 login_hash() const;
+  inline void set_login_hash(::google::protobuf::int64 value);
+
+  // @@protoc_insertion_point(class_scope:ige.LoginSuccess)
+ private:
+  inline void set_has_login_hash();
+  inline void clear_has_login_hash();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int64 login_hash_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_ige_5fsync_2eproto();
+  friend void protobuf_AssignDesc_ige_5fsync_2eproto();
+  friend void protobuf_ShutdownFile_ige_5fsync_2eproto();
+
+  void InitAsDefaultInstance();
+  static LoginSuccess* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -1071,6 +1154,32 @@ inline void Login::set_allocated_password(::std::string* password) {
     clear_has_password();
     password_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
+}
+
+// -------------------------------------------------------------------
+
+// LoginSuccess
+
+// required int64 login_hash = 1;
+inline bool LoginSuccess::has_login_hash() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void LoginSuccess::set_has_login_hash() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void LoginSuccess::clear_has_login_hash() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void LoginSuccess::clear_login_hash() {
+  login_hash_ = GOOGLE_LONGLONG(0);
+  clear_has_login_hash();
+}
+inline ::google::protobuf::int64 LoginSuccess::login_hash() const {
+  return login_hash_;
+}
+inline void LoginSuccess::set_login_hash(::google::protobuf::int64 value) {
+  set_has_login_hash();
+  login_hash_ = value;
 }
 
 // -------------------------------------------------------------------

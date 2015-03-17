@@ -21,6 +21,8 @@
 
 #include "utility.hh"
 #include "console.hh"
+#include "auth.hh"
+#include "server.hh"
 
 #include "mid.hh"
 
@@ -62,8 +64,23 @@ namespace net {
                         void send_message (message* msg);
         };
 
+        class user
+        {
+                private:
+                        connection* cxn;
+                public:
+                        user (connection* cxn);
+                        void send_message (google::protobuf::MessageLite* msg, uint32_t id);
+                        void flush_messages ();
+                        cxn_state state;
+
+                        uint64_t hash;
+        };
+
         class enet
         {
+                friend class enet_event;
+
                 private:
                         ENetHost* host;
 
@@ -74,8 +91,6 @@ namespace net {
 
                         std::map<uint32_t, connection*> peers;
 
-                        ENetEvent event;
-
                 public:
                         enet ();
                         ~enet ();
@@ -83,11 +98,28 @@ namespace net {
                         bool create_host (std::string endpoint, enet_uint16 port = 0);
                         bool bind_host (ENetAddress* address);
                         connection* connect_peer (ENetAddress address);
-                        connection* get_connection ();
-                        ENetEventType process (message** msg);
-                        void clean (message** msg);
 
                         static ENetAddress make_address (std::string endpoint, enet_uint16 port);
+        };
+
+        /*! \brief Encapsulate the enet event with RAII idiom wooooooo
+         * 
+         */
+        class enet_event
+        {
+                private:
+                        ENetEvent event;
+                        enet* ll_net;
+                public:
+                        enet_event (enet* ll_net);
+                        ~enet_event ();
+
+                        message* msg;
+                        connection* cxn;
+
+                        ENetEventType type;
+
+                        connection* get_connection ();
         };
 
 
@@ -96,41 +128,45 @@ namespace net {
                 private:
 
                 public:
+                        sentinel* sent;
+        
                         peer ();
                         ~peer ();
         
                         enet ll_net;
+                        std::map<connection*, user*> users;
 
-                        void main ();
+                        void entry ();
+                        void process ();
 
-                        virtual void new_connection () = 0;
-                        virtual void destroy_connection () = 0;
-                        virtual void process (message* msg) = 0;
+                        virtual void new_connection (connection* cxn) = 0;
+                        virtual void destroy_connection (connection* cxn) = 0;
+                        virtual void process_message (connection* cxn, message* msg) = 0;
         };
 
         class client : public peer
         {
                 private:
-                        connection* server;
+                        user* server;
                         cxn_state state;
+                        std::map<uint64_t, user*> clients;
 
                 public:
-                        client (std::string address, enet_uint16, std::string username, std::string password);
+                        client (sentinel* s, std::string address, enet_uint16, std::string username, std::string password);
 
-                        void new_connection ();
-                        void destroy_connection ();
-                        void process (message* msg);
+                        void new_connection (connection* cxn);
+                        void destroy_connection (connection* cxn);
+                        void process_message (connection* cxn, message* msg);
         };
 
         class server : public peer
         {
                 private:
-
                 public:
-                        server (std::string address, enet_uint16);
+                        server (sentinel* s, std::string address, enet_uint16);
 
-                        void new_connection ();
-                        void destroy_connection ();
-                        void process (message* msg);
+                        void new_connection (connection* cxn);
+                        void destroy_connection (connection* cxn);
+                        void process_message (connection* cxn, message* msg);
         };
 }
