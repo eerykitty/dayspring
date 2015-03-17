@@ -1,6 +1,6 @@
-#include "message.hh"
+#include "network.hh"
 
-ll_net::message::message (ENetPacket* packet)
+net::message::message (ENetPacket* packet)
 {
         id = *((uint32_t*)packet->data);
         data = (void*)((uint32_t*)(packet->data)+1);
@@ -8,7 +8,7 @@ ll_net::message::message (ENetPacket* packet)
         reliable = (packet->flags == ENET_PACKET_FLAG_RELIABLE ? true : false);
 }
 
-ll_net::message::message (std::string string)
+net::message::message (std::string string)
 {
         id = MID(msg);
         const char* data = string.c_str ();
@@ -21,7 +21,7 @@ ll_net::message::message (std::string string)
 }
 
 // empty payload, for sending auth request by server to client
-ll_net::message::message (uint32_t com)
+net::message::message (uint32_t com)
 {
         id = com;
         length = 0;
@@ -29,7 +29,26 @@ ll_net::message::message (uint32_t com)
         reliable = true;
 }
 
-ll_net::message::message ()
+net::message::message (google::protobuf::MessageLite* message, uint32_t id)
+{
+        this->id = id;
+        length = message->ByteSize ();
+        data = malloc (length);
+        message->SerializeToArray (data, length);
+        reliable = true;
+}
+
+net::message::message ()
 {
         // *crickets chirping*
+}
+
+net::message::~message ()
+{
+        //free (data);
+}
+
+bool net::message::read_buffer (google::protobuf::MessageLite* message)
+{
+        return message->ParseFromArray (data, length);
 }

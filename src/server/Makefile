@@ -1,10 +1,10 @@
 all: server client
 
-client: client_main.o server.o console.o ige_sync.pb.o utility.o network.o player.o flags.o auth.o
-	g++ -std=c++11 -lenet -lprotobuf -o client client_main.o server.o console.o network.o utility.o flags.o auth.o ige_sync.pb.o -pthread -g
+client: client_main.o server.o console.o ige_sync.pb.o utility.o network.o player.o flags.o auth.o enet.o user.o net_server.o net_client.o message.o
+	g++ -std=c++11 -lenet -lprotobuf -o client client_main.o server.o console.o network.o utility.o flags.o auth.o ige_sync.pb.o enet.o user.o net_server.o net_client.o message.o -pthread -g
 
-server: main.o server.o console.o ige_sync.pb.o utility.o network.o player.o flags.o auth.o
-	g++ -std=c++11 -lenet -lprotobuf -o server main.o server.o console.o network.o utility.o flags.o auth.o ige_sync.pb.o -pthread -g
+server: main.o server.o console.o ige_sync.pb.o utility.o network.o player.o flags.o auth.o enet.o user.o net_server.o net_client.o message.o
+	g++ -std=c++11 -lenet -lprotobuf -o server main.o server.o console.o network.o utility.o flags.o auth.o ige_sync.pb.o enet.o user.o net_server.o net_client.o message.o -pthread -g
 
 main.o: main.cc
 	g++ -c -std=c++11 main.cc -pthread -g
@@ -36,6 +36,19 @@ flags.o: flags.cc
 
 auth.o: auth.cc
 	g++ -c -std=c++11 auth.cc -g
+
+enet.o: enet.cc
+	g++ -c -std=c++11 enet.cc -g
+
+user.o: user.cc
+	g++ -c -std=c++11 user.cc -g
+
+net_server.o: net_server.cc
+	g++ -c -std=c++11 net_server.cc -g
+net_client.o: net_client.cc
+	g++ -c -std=c++11 net_client.cc -g
+message.o: message.cc
+	g++ -c -std=c++11 message.cc
 
 clean:
 	rm *.o

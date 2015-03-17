@@ -11,5 +11,6 @@ enum class mid : std::uint32_t
         op = 1,
         timestamp = 2,
         auth = 3,
+        flag = 4,
         msg = 100
 };

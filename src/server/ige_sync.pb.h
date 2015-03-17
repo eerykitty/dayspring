@@ -37,6 +37,7 @@ void protobuf_ShutdownFile_ige_5fsync_2eproto();
 class Command;
 class Login;
 class LoginSuccess;
+class SetFlag;
 class SendEpoch;
 class Timestamp;
 class Geometry;
@@ -350,6 +351,103 @@ class LoginSuccess : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static LoginSuccess* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class SetFlag : public ::google::protobuf::Message {
+ public:
+  SetFlag();
+  virtual ~SetFlag();
+
+  SetFlag(const SetFlag& from);
+
+  inline SetFlag& operator=(const SetFlag& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const SetFlag& default_instance();
+
+  void Swap(SetFlag* other);
+
+  // implements Message ----------------------------------------------
+
+  SetFlag* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const SetFlag& from);
+  void MergeFrom(const SetFlag& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string flag_name = 1;
+  inline bool has_flag_name() const;
+  inline void clear_flag_name();
+  static const int kFlagNameFieldNumber = 1;
+  inline const ::std::string& flag_name() const;
+  inline void set_flag_name(const ::std::string& value);
+  inline void set_flag_name(const char* value);
+  inline void set_flag_name(const char* value, size_t size);
+  inline ::std::string* mutable_flag_name();
+  inline ::std::string* release_flag_name();
+  inline void set_allocated_flag_name(::std::string* flag_name);
+
+  // required bool flag_value = 2;
+  inline bool has_flag_value() const;
+  inline void clear_flag_value();
+  static const int kFlagValueFieldNumber = 2;
+  inline bool flag_value() const;
+  inline void set_flag_value(bool value);
+
+  // @@protoc_insertion_point(class_scope:ige.SetFlag)
+ private:
+  inline void set_has_flag_name();
+  inline void clear_has_flag_name();
+  inline void set_has_flag_value();
+  inline void clear_has_flag_value();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* flag_name_;
+  bool flag_value_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void  protobuf_AddDesc_ige_5fsync_2eproto();
+  friend void protobuf_AssignDesc_ige_5fsync_2eproto();
+  friend void protobuf_ShutdownFile_ige_5fsync_2eproto();
+
+  void InitAsDefaultInstance();
+  static SetFlag* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -1180,6 +1278,102 @@ inline ::google::protobuf::int64 LoginSuccess::login_hash() const {
 inline void LoginSuccess::set_login_hash(::google::protobuf::int64 value) {
   set_has_login_hash();
   login_hash_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// SetFlag
+
+// required string flag_name = 1;
+inline bool SetFlag::has_flag_name() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void SetFlag::set_has_flag_name() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void SetFlag::clear_has_flag_name() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void SetFlag::clear_flag_name() {
+  if (flag_name_ != &::google::protobuf::internal::kEmptyString) {
+    flag_name_->clear();
+  }
+  clear_has_flag_name();
+}
+inline const ::std::string& SetFlag::flag_name() const {
+  return *flag_name_;
+}
+inline void SetFlag::set_flag_name(const ::std::string& value) {
+  set_has_flag_name();
+  if (flag_name_ == &::google::protobuf::internal::kEmptyString) {
+    flag_name_ = new ::std::string;
+  }
+  flag_name_->assign(value);
+}
+inline void SetFlag::set_flag_name(const char* value) {
+  set_has_flag_name();
+  if (flag_name_ == &::google::protobuf::internal::kEmptyString) {
+    flag_name_ = new ::std::string;
+  }
+  flag_name_->assign(value);
+}
+inline void SetFlag::set_flag_name(const char* value, size_t size) {
+  set_has_flag_name();
+  if (flag_name_ == &::google::protobuf::internal::kEmptyString) {
+    flag_name_ = new ::std::string;
+  }
+  flag_name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* SetFlag::mutable_flag_name() {
+  set_has_flag_name();
+  if (flag_name_ == &::google::protobuf::internal::kEmptyString) {
+    flag_name_ = new ::std::string;
+  }
+  return flag_name_;
+}
+inline ::std::string* SetFlag::release_flag_name() {
+  clear_has_flag_name();
+  if (flag_name_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = flag_name_;
+    flag_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void SetFlag::set_allocated_flag_name(::std::string* flag_name) {
+  if (flag_name_ != &::google::protobuf::internal::kEmptyString) {
+    delete flag_name_;
+  }
+  if (flag_name) {
+    set_has_flag_name();
+    flag_name_ = flag_name;
+  } else {
+    clear_has_flag_name();
+    flag_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required bool flag_value = 2;
+inline bool SetFlag::has_flag_value() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void SetFlag::set_has_flag_value() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void SetFlag::clear_has_flag_value() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void SetFlag::clear_flag_value() {
+  flag_value_ = false;
+  clear_has_flag_value();
+}
+inline bool SetFlag::flag_value() const {
+  return flag_value_;
+}
+inline void SetFlag::set_flag_value(bool value) {
+  set_has_flag_value();
+  flag_value_ = value;
 }
 
 // -------------------------------------------------------------------

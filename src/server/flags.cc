@@ -11,12 +11,7 @@ bool flag_table::is_set (std::string string)
                 return false;
 }
 
-void flag_table::set (std::string string)
+void flag_table::set (std::string string, bool value)
 {
-        flags[string] = true;
-}
-
-void flag_table::clear (std::string string)
-{
-        flags[string] = false;
+        flags[string] = value;
 }

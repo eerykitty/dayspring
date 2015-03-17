@@ -23,6 +23,7 @@
 #include "console.hh"
 #include "auth.hh"
 #include "server.hh"
+#include "flags.hh"
 
 #include "mid.hh"
 
@@ -46,7 +47,7 @@ namespace net {
                 message ();
                 ~message ();
 
-                void read_buffer (google::protobuf::MessageLite* message);
+                bool read_buffer (google::protobuf::MessageLite* message);
         };
 
         class connection
@@ -75,6 +76,10 @@ namespace net {
                         cxn_state state;
 
                         uint64_t hash;
+
+                        flag_table flags;
+
+                        void sync_flag (std::string flag_name);
         };
 
         class enet
@@ -149,7 +154,6 @@ namespace net {
                 private:
                         user* server;
                         cxn_state state;
-                        std::map<uint64_t, user*> clients;
 
                 public:
                         client (sentinel* s, std::string address, enet_uint16, std::string username, std::string password);
@@ -163,6 +167,7 @@ namespace net {
         {
                 private:
                 public:
+                        std::map<uint64_t, user*> clients;
                         server (sentinel* s, std::string address, enet_uint16);
 
                         void new_connection (connection* cxn);
