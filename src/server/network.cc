@@ -62,8 +62,33 @@ net::connection* net::enet::connect_peer (ENetAddress address)
         ENetEvent event;
         if (enet_host_service (host, &event, 5000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT)
         {
-                peers.push_front (peer);
-                return new connection (peer);
+                connection* cxn = new connection (peer);
+                peers[peer->connectID] = cxn;
+                peer->data = &cxn;
+                return cxn;
+        }
+        else
+        {
+                return NULL;
+        }
+}
+
+net::connection* net::enet::get_connection ()
+{
+        if (event.peer != NULL)
+        {
+                auto it = peers.find (event.peer->connectID);
+                if (it == peers.end ())
+                { // peer isn't already listed
+                        connection* cxn = new connection (event.peer);
+                        peers[event.peer->connectID] = cxn;
+                        event.peer->data = &cxn;
+                        return cxn;
+                }
+                else
+                {
+                        return it->second;
+                }
         }
         else
         {
@@ -90,6 +115,7 @@ net::client::client (std::string address, enet_uint16 port, std::string username
 net::connection::connection (ENetPeer* peer)
 {
         this->peer = peer;
+        this->id = peer->connectID;
 }
 
 void net::connection::queue_message (message* msg)
@@ -159,7 +185,85 @@ net::message::message ()
         // *crickets chirping*
 }
 
+net::message::~message ()
+{
+        free (data);
+}
+
 void net::message::read_buffer (google::protobuf::MessageLite* message)
 {
         message->ParseFromArray (data, length);
+}
+
+ENetEventType net::enet::process (net::message** msg)
+{
+        *msg = NULL;
+        if (enet_host_service (host, &event, 500) > 0)
+        {
+                if (event.type == ENET_EVENT_TYPE_RECEIVE)
+                        *msg = new message (event.packet);
+                return event.type;
+        }
+        else
+        {
+                return ENET_EVENT_TYPE_NONE;
+        }
+}
+
+void net::enet::clean (net::message** msg)
+{
+        delete *msg;
+        enet_packet_destroy (event.packet);
+}
+
+void net::peer::main ()
+{
+        message* msg;
+        switch (ll_net.process (&msg))
+        {
+                case ENET_EVENT_TYPE_CONNECT:
+                        this->new_connection ();
+                        break;
+                case ENET_EVENT_TYPE_DISCONNECT:
+                        this->destroy_connection ();
+                        break;
+                case ENET_EVENT_TYPE_RECEIVE:
+                        this->process (msg);
+                        break;
+        }
+        ll_net.clean (&msg);
+}
+
+net::peer::peer ()
+{
+}
+
+net::peer::~peer ()
+{
+}
+
+void net::client::new_connection ()
+{
+        // this shouldn't ever be reached...
+}
+
+void net::client::destroy_connection ()
+{
+        // whoops, the server kicked us :(
+}
+
+void net::client::process (message* msg)
+{
+}
+
+void net::server::new_connection ()
+{
+}
+
+void net::server::destroy_connection ()
+{
+}
+
+void net::server::process (message* msg)
+{
 }

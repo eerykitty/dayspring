@@ -31,31 +31,6 @@ namespace net {
                 CXN_SPECTATE,  // authenticated, but not playing
                 CXN_IN_GAME};  // playing!
 
-        class connection;
-
-        class enet
-        {
-                private:
-                        ENetHost* host;
-
-                        int max_clients;
-                        int channel_count;
-                        int bandwith_up;
-                        int bandwith_down;
-
-                        std::list<ENetPeer*> peers;
-
-                public:
-                        enet ();
-                        ~enet ();
-
-                        bool create_host (std::string endpoint, enet_uint16 port = 0);
-                        bool bind_host (ENetAddress* address);
-                        connection* connect_peer (ENetAddress address);
-
-                        static ENetAddress make_address (std::string endpoint, enet_uint16 port);
-        };
-
         struct message
         {
                 std::uint32_t id;
@@ -67,6 +42,7 @@ namespace net {
                 message (uint32_t com);
                 message (google::protobuf::MessageLite* message, uint32_t id);
                 message ();
+                ~message ();
 
                 void read_buffer (google::protobuf::MessageLite* message);
         };
@@ -79,23 +55,57 @@ namespace net {
                         ENetPeer* peer;
                 public:
                         connection (ENetPeer* peer);
+                        uint32_t id;
 
                         void flush_message_queue ();
                         void queue_message (message* msg);
                         void send_message (message* msg);
         };
 
+        class enet
+        {
+                private:
+                        ENetHost* host;
+
+                        int max_clients;
+                        int channel_count;
+                        int bandwith_up;
+                        int bandwith_down;
+
+                        std::map<uint32_t, connection*> peers;
+
+                        ENetEvent event;
+
+                public:
+                        enet ();
+                        ~enet ();
+
+                        bool create_host (std::string endpoint, enet_uint16 port = 0);
+                        bool bind_host (ENetAddress* address);
+                        connection* connect_peer (ENetAddress address);
+                        connection* get_connection ();
+                        ENetEventType process (message** msg);
+                        void clean (message** msg);
+
+                        static ENetAddress make_address (std::string endpoint, enet_uint16 port);
+        };
+
+
         class peer
         {
                 private:
 
                 public:
-                        //peer ();
-                        //~peer ();
+                        peer ();
+                        ~peer ();
         
                         enet ll_net;
 
                         void main ();
+
+                        virtual void new_connection () = 0;
+                        virtual void destroy_connection () = 0;
+                        virtual void process (message* msg) = 0;
         };
 
         class client : public peer
@@ -106,6 +116,10 @@ namespace net {
 
                 public:
                         client (std::string address, enet_uint16, std::string username, std::string password);
+
+                        void new_connection ();
+                        void destroy_connection ();
+                        void process (message* msg);
         };
 
         class server : public peer
@@ -114,5 +128,9 @@ namespace net {
 
                 public:
                         server (std::string address, enet_uint16);
+
+                        void new_connection ();
+                        void destroy_connection ();
+                        void process (message* msg);
         };
 }
