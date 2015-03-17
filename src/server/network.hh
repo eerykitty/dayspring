@@ -10,6 +10,7 @@
 #include <queue>
 #include <cstdint>
 #include <mutex>
+#include <list>
 
 #include <stdio.h>
 #include <string.h>
@@ -21,7 +22,16 @@
 #include "utility.hh"
 #include "console.hh"
 
+#include "mid.hh"
+
 namespace net {
+
+        enum cxn_state {
+                CXN_HANDSHAKE, // authentification stage,
+                CXN_SPECTATE,  // authenticated, but not playing
+                CXN_IN_GAME};  // playing!
+
+        class connection;
 
         class enet
         {
@@ -33,34 +43,76 @@ namespace net {
                         int bandwith_up;
                         int bandwith_down;
 
+                        std::list<ENetPeer*> peers;
+
                 public:
                         enet ();
                         ~enet ();
 
-                        bool create_host (std::string endpoint, enet_uint16 port);
+                        bool create_host (std::string endpoint, enet_uint16 port = 0);
                         bool bind_host (ENetAddress* address);
+                        connection* connect_peer (ENetAddress address);
+
+                        static ENetAddress make_address (std::string endpoint, enet_uint16 port);
+        };
+
+        struct message
+        {
+                std::uint32_t id;
+                void* data;
+                size_t length;
+                bool reliable;
+                message (ENetPacket* packet);
+                message (std::string string);
+                message (uint32_t com);
+                message (google::protobuf::MessageLite* message, uint32_t id);
+                message ();
+
+                void read_buffer (google::protobuf::MessageLite* message);
+        };
+
+        class connection
+        {
+                private:
+                        std::mutex mq_mutex;
+                        std::queue<message*> message_queue;
+                        ENetPeer* peer;
+                public:
+                        connection (ENetPeer* peer);
+
+                        void flush_message_queue ();
+                        void queue_message (message* msg);
+                        void send_message (message* msg);
         };
 
         class peer
         {
                 private:
-                        enet ll_net;
 
                 public:
-                        peer ();
-                        ~peer ();
+                        //peer ();
+                        //~peer ();
+        
+                        enet ll_net;
+
                         void main ();
         };
 
         class client : public peer
         {
+                private:
+                        connection* server;
+                        cxn_state state;
+
                 public:
-                        client (std::string address);
+                        client (std::string address, enet_uint16, std::string username, std::string password);
         };
 
         class server : public peer
         {
+                private:
+
                 public:
-                        server (std::string address);
+                        server (std::string address, enet_uint16);
         };
 }
