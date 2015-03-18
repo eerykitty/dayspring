@@ -1,4 +1,5 @@
 #include "server.hh"
+#include "network.hh"
 
 sentinel::sentinel (unsigned int count)
 {
@@ -20,6 +21,11 @@ std::string sentinel::format_time (std::chrono::high_resolution_clock::time_poin
                         "%T",
                         t);
         return std::string (buff);
+}
+
+void sentinel::set_network (net::server* net_thread)
+{
+        ll_net = net_thread;
 }
 
 void sentinel::main ()
@@ -50,6 +56,12 @@ void sentinel::main ()
                 /*
                  * Tock!
                  */
+                uint64_t id = 3816612501950020667;
+                ige::SetFlag flag_message;
+                flag_message.set_flag_name ("HELLOWORLD");
+                flag_message.set_flag_value (true);
+                ll_net->send (id, &flag_message, MID(flag));
+
                 if (se_clock::now () < tp)
                 {
                         std::this_thread::sleep_until (tp);

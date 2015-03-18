@@ -48,6 +48,15 @@ net::message::~message ()
         //free (data);
 }
 
+net::message::message (message& other)
+{
+        id = other.id;
+        length = other.length;
+        reliable = other.reliable;
+        data = malloc (length);
+        data = memcpy (data, other.data, length);
+}
+
 bool net::message::read_buffer (google::protobuf::MessageLite* message)
 {
         return message->ParseFromArray (data, length);

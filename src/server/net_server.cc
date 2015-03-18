@@ -46,3 +46,12 @@ void net::server::process_message (connection* cxn, message* msg)
                         break;
         }
 }
+
+bool net::server::send (uint64_t id, google::protobuf::MessageLite* msg, uint32_t mid)
+{
+        std::lock_guard<std::mutex> lock (message_mutex);
+        if (clients.find (id) != clients.end ())
+        {
+                clients[id]->send_message (msg, mid);
+        }
+}

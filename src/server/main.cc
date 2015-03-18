@@ -11,6 +11,7 @@ int main (int argc, char** argv)
         {
                 sentinel sent (1);
                 net::server server (&sent, "127.0.0.1", 1234);
+                sent.set_network (&server);
                 console::t_notify ("MAIN", "Starting sentinel.");
                 std::thread sentinel_thread (&sentinel::main, &sent);
 

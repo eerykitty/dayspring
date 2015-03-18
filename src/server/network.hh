@@ -46,6 +46,7 @@ namespace net {
                 message (google::protobuf::MessageLite* message, uint32_t id);
                 message ();
                 ~message ();
+                message (message& other);
 
                 bool read_buffer (google::protobuf::MessageLite* message);
         };
@@ -140,6 +141,7 @@ namespace net {
         
                         enet ll_net;
                         std::map<connection*, user*> users;
+                        std::list<message*> messages;
 
                         void entry ();
                         void process ();
@@ -161,6 +163,9 @@ namespace net {
                         void new_connection (connection* cxn);
                         void destroy_connection (connection* cxn);
                         void process_message (connection* cxn, message* msg);
+                        bool send (google::protobuf::MessageLite* msg, uint32_t mid);
+
+                        std::mutex message_mutex;
         };
 
         class server : public peer
@@ -173,5 +178,8 @@ namespace net {
                         void new_connection (connection* cxn);
                         void destroy_connection (connection* cxn);
                         void process_message (connection* cxn, message* msg);
+                        bool send (uint64_t id, google::protobuf::MessageLite* msg, uint32_t mid);
+
+                        std::mutex message_mutex;
         };
 }
