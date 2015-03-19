@@ -1,9 +1,8 @@
 #include "network.hh"
 
-net::client::client (sentinel* s, std::string address, enet_uint16 port, std::string username, std::string password)
+net::client::client (std::string address, enet_uint16 port, std::string username, std::string password)
 {
         console::t_notify ("CLIENT", "Starting client");
-        sent = s;
         ll_net.create_host (""); // don't want to bind any address for a client
         connection* cxn = ll_net.connect_peer (enet::make_address (address, port));
         server = new user (cxn);
@@ -53,7 +52,7 @@ void net::client::process_message (connection* cxn, message* msg)
         }
 }
 
-bool net::client::send (google::protobuf::MessageLite* msg, uint32_t mid)
+bool net::client::send (uint64_t id, google::protobuf::MessageLite* msg, uint32_t mid)
 {
         std::lock_guard<std::mutex> lock (message_mutex);
         server->send_message (msg, mid);

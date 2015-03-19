@@ -1,16 +1,17 @@
-#include <chrono>
-#include <thread>
-#include <iostream>
-
 #include "server.hh"
-#include "ll_network.hh"
+#include "network.hh"
 #include "console.hh"
+
+#include "main.hh"
+
+net::peer* net_host;
+sentinel* time_sentinel;
 
 int main (int argc, char** argv)
 {
         {
                 sentinel sent (1);
-                net::client client (&sent, "127.0.0.1", 1234, "joseph", "password");
+                net::client client ("127.0.0.1", 1234, "joseph", "password");
                 console::t_notify ("MAIN", "Starting sentinel.");
                 std::thread sentinel_thread (&sentinel::main, &sent);
 

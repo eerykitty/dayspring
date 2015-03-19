@@ -1,9 +1,8 @@
 #include "network.hh"
 
-net::server::server (sentinel* s, std::string address, enet_uint16 port)
+net::server::server (std::string address, enet_uint16 port)
 {
         console::t_notify ("SERVER", "Starting server");
-        sent = s;
         ll_net.create_host (address, port);
 }
 

@@ -54,6 +54,7 @@ void net::peer::process ()
 
 net::peer::peer ()
 {
+        net_host = this;
 }
 
 net::peer::~peer ()
@@ -66,7 +67,7 @@ void net::peer::entry ()
         for (;;)
         {
                 process ();
-                if (sent->close_server)
+                if (time_sentinel->close_server)
                         return;
         }
 }

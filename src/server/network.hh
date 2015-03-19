@@ -27,6 +27,8 @@
 
 #include "mid.hh"
 
+#include "main.hh"
+
 namespace net {
 
         enum cxn_state {
@@ -134,8 +136,6 @@ namespace net {
                 private:
 
                 public:
-                        sentinel* sent;
-        
                         peer ();
                         ~peer ();
         
@@ -149,6 +149,7 @@ namespace net {
                         virtual void new_connection (connection* cxn) = 0;
                         virtual void destroy_connection (connection* cxn) = 0;
                         virtual void process_message (connection* cxn, message* msg) = 0;
+                        virtual bool send (uint64_t id, google::protobuf::MessageLite* msg, uint32_t mid) = 0;
         };
 
         class client : public peer
@@ -158,12 +159,12 @@ namespace net {
                         cxn_state state;
 
                 public:
-                        client (sentinel* s, std::string address, enet_uint16, std::string username, std::string password);
+                        client (std::string address, enet_uint16, std::string username, std::string password);
 
                         void new_connection (connection* cxn);
                         void destroy_connection (connection* cxn);
                         void process_message (connection* cxn, message* msg);
-                        bool send (google::protobuf::MessageLite* msg, uint32_t mid);
+                        bool send (uint64_t id, google::protobuf::MessageLite* msg, uint32_t mid);
 
                         std::mutex message_mutex;
         };
@@ -173,7 +174,7 @@ namespace net {
                 private:
                 public:
                         std::map<uint64_t, user*> clients;
-                        server (sentinel* s, std::string address, enet_uint16);
+                        server (std::string address, enet_uint16);
 
                         void new_connection (connection* cxn);
                         void destroy_connection (connection* cxn);
