@@ -15,9 +15,9 @@ extern display* window;
 void game_client::main ()
 {
         net::client* host = static_cast<net::client*> (net_host);
-        for (int j = 0; j < 3; j++)
+        for (int j = 0; j < 10; j++)
         {
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 3; i++)
                 {
                         host->send (0, time_sentinel->game_time (), MID(timestamp));
                 }
@@ -25,12 +25,17 @@ void game_client::main ()
                 time_sentinel->time_delta = std::accumulate (time_sentinel->time_deltas.begin (), time_sentinel->time_deltas.end (), 0) / time_sentinel->time_deltas.size ();
         }
 
-        for (auto delay : time_sentinel->time_deltas)
-        {
-                console::notify (std::to_string (delay));
-        }
+        std::chrono::milliseconds time_delay (time_sentinel->time_delta);
+        console::t_notify ("CHAI", "Delta T is " + std::to_string (time_sentinel->time_delta));
 
-        console::notify ("Time delay is " + std::to_string (time_sentinel->time_delta) + " amassed from " + std::to_string (time_sentinel->time_deltas.size ()) + " samples.");
+        auto tick = std::chrono::milliseconds (1000);
+
+        for (;;)
+        {
+                auto tp = se_clock::now () + tick + time_delay;
+                console::t_notify ("CHAI", "tick!");
+                std::this_thread::sleep_until (tp);
+        }
 
         //chaiscript::ChaiScript chai (chaiscript::Std_Lib::library ());
         //chai.add (chaiscript::fun(&console::t_notify), "t_notify");

@@ -21,8 +21,8 @@ int main (int argc, char** argv)
 
         if (argc == 5)
         {
-                window = new display;
-                window->create_window ();
+                //window = new display;
+                //window->create_window ();
                 sentinel sent (1);
                 net::client client (argv[1], atoi (argv[2]), argv[3], argv[4]);
 
@@ -39,8 +39,8 @@ int main (int argc, char** argv)
                 enet_thread.join ();
                 console::t_notify ("MAIN", "Networking thread safely joined.");
                 client_thread->join ();
-                window->destroy_window ();
-                delete window;
+                //window->destroy_window ();
+                //delete window;
         }
 
         console::notify ("have a nice day :3");

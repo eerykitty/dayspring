@@ -38,18 +38,28 @@ void sentinel::main ()
         //start_tm->tm_sec--; // since we're rounding away microseconds but still using a microsecond resolution clock we need to make sure this epoch be in the PAST.
         epoch_tm = (std::tm*)malloc (sizeof (std::tm));
         memcpy (epoch_tm, start_tm, sizeof (std::tm));
-        epoch_tm->tm_mday--;
+
+        epoch_tm->tm_sec = 0;//server_auth.epoch().sec ();
+        epoch_tm->tm_min = 0;//server_auth.epoch().min ();
+        epoch_tm->tm_hour = 0;//server_auth.epoch().hour ();
+        epoch_tm->tm_mday = 1;//server_auth.epoch().day ();
+        epoch_tm->tm_mon = 0;//server_auth.epoch().mon ();
+        epoch_tm->tm_year = 100;//server_auth.epoch().year ();
+        epoch_tm->tm_wday = 0;
+        epoch_tm->tm_yday = 0;
+        epoch_tm->tm_isdst = 0;
+
         epoch_t = mktime (epoch_tm);
         start = se_clock::from_time_t (epoch_t);
         epoch = se_clock::from_time_t (epoch_t);
-       
+
         // this might not be necessary?
         //std::this_thread::sleep_until (se_clock::now () + std::chrono::seconds (1));
         // def not necessary.
 
         console::t_notify ("SENTINEL", "started ticking");
 
-        auto tick = std::chrono::seconds (1);
+        auto tick = std::chrono::milliseconds (1000);
 
         for (;;)
         {
@@ -72,8 +82,8 @@ void sentinel::main ()
                 {
                         // We're overdue, for now all we'll do is notify via console, but
                         // TODO: add calibration routines
-                        
-                       console::t_notify ("SENTINEL", "tick/tock off schedule; system overloaded or clock changed. Go fix it."); 
+
+                        console::t_notify ("SENTINEL", "tick/tock off schedule; system overloaded or clock changed. Go fix it."); 
                 }
                 if (close_server)
                         return;
