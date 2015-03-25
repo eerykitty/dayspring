@@ -40,6 +40,7 @@ class SetFlag;
 class SendEpoch;
 class LoginSuccess;
 class Timestamp;
+class SNTP;
 class Geometry;
 class Entity;
 class Item;
@@ -674,6 +675,114 @@ class Timestamp : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static Timestamp* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class SNTP : public ::google::protobuf::Message {
+ public:
+  SNTP();
+  virtual ~SNTP();
+
+  SNTP(const SNTP& from);
+
+  inline SNTP& operator=(const SNTP& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const SNTP& default_instance();
+
+  void Swap(SNTP* other);
+
+  // implements Message ----------------------------------------------
+
+  SNTP* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const SNTP& from);
+  void MergeFrom(const SNTP& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required .ige.Timestamp t0 = 1;
+  inline bool has_t0() const;
+  inline void clear_t0();
+  static const int kT0FieldNumber = 1;
+  inline const ::ige::Timestamp& t0() const;
+  inline ::ige::Timestamp* mutable_t0();
+  inline ::ige::Timestamp* release_t0();
+  inline void set_allocated_t0(::ige::Timestamp* t0);
+
+  // required .ige.Timestamp t1 = 2;
+  inline bool has_t1() const;
+  inline void clear_t1();
+  static const int kT1FieldNumber = 2;
+  inline const ::ige::Timestamp& t1() const;
+  inline ::ige::Timestamp* mutable_t1();
+  inline ::ige::Timestamp* release_t1();
+  inline void set_allocated_t1(::ige::Timestamp* t1);
+
+  // required .ige.Timestamp t2 = 3;
+  inline bool has_t2() const;
+  inline void clear_t2();
+  static const int kT2FieldNumber = 3;
+  inline const ::ige::Timestamp& t2() const;
+  inline ::ige::Timestamp* mutable_t2();
+  inline ::ige::Timestamp* release_t2();
+  inline void set_allocated_t2(::ige::Timestamp* t2);
+
+  // @@protoc_insertion_point(class_scope:ige.SNTP)
+ private:
+  inline void set_has_t0();
+  inline void clear_has_t0();
+  inline void set_has_t1();
+  inline void clear_has_t1();
+  inline void set_has_t2();
+  inline void clear_has_t2();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::ige::Timestamp* t0_;
+  ::ige::Timestamp* t1_;
+  ::ige::Timestamp* t2_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void  protobuf_AddDesc_ige_5fsync_2eproto();
+  friend void protobuf_AssignDesc_ige_5fsync_2eproto();
+  friend void protobuf_ShutdownFile_ige_5fsync_2eproto();
+
+  void InitAsDefaultInstance();
+  static SNTP* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -1586,6 +1695,124 @@ inline ::google::protobuf::int64 Timestamp::time() const {
 inline void Timestamp::set_time(::google::protobuf::int64 value) {
   set_has_time();
   time_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// SNTP
+
+// required .ige.Timestamp t0 = 1;
+inline bool SNTP::has_t0() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void SNTP::set_has_t0() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void SNTP::clear_has_t0() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void SNTP::clear_t0() {
+  if (t0_ != NULL) t0_->::ige::Timestamp::Clear();
+  clear_has_t0();
+}
+inline const ::ige::Timestamp& SNTP::t0() const {
+  return t0_ != NULL ? *t0_ : *default_instance_->t0_;
+}
+inline ::ige::Timestamp* SNTP::mutable_t0() {
+  set_has_t0();
+  if (t0_ == NULL) t0_ = new ::ige::Timestamp;
+  return t0_;
+}
+inline ::ige::Timestamp* SNTP::release_t0() {
+  clear_has_t0();
+  ::ige::Timestamp* temp = t0_;
+  t0_ = NULL;
+  return temp;
+}
+inline void SNTP::set_allocated_t0(::ige::Timestamp* t0) {
+  delete t0_;
+  t0_ = t0;
+  if (t0) {
+    set_has_t0();
+  } else {
+    clear_has_t0();
+  }
+}
+
+// required .ige.Timestamp t1 = 2;
+inline bool SNTP::has_t1() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void SNTP::set_has_t1() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void SNTP::clear_has_t1() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void SNTP::clear_t1() {
+  if (t1_ != NULL) t1_->::ige::Timestamp::Clear();
+  clear_has_t1();
+}
+inline const ::ige::Timestamp& SNTP::t1() const {
+  return t1_ != NULL ? *t1_ : *default_instance_->t1_;
+}
+inline ::ige::Timestamp* SNTP::mutable_t1() {
+  set_has_t1();
+  if (t1_ == NULL) t1_ = new ::ige::Timestamp;
+  return t1_;
+}
+inline ::ige::Timestamp* SNTP::release_t1() {
+  clear_has_t1();
+  ::ige::Timestamp* temp = t1_;
+  t1_ = NULL;
+  return temp;
+}
+inline void SNTP::set_allocated_t1(::ige::Timestamp* t1) {
+  delete t1_;
+  t1_ = t1;
+  if (t1) {
+    set_has_t1();
+  } else {
+    clear_has_t1();
+  }
+}
+
+// required .ige.Timestamp t2 = 3;
+inline bool SNTP::has_t2() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void SNTP::set_has_t2() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void SNTP::clear_has_t2() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void SNTP::clear_t2() {
+  if (t2_ != NULL) t2_->::ige::Timestamp::Clear();
+  clear_has_t2();
+}
+inline const ::ige::Timestamp& SNTP::t2() const {
+  return t2_ != NULL ? *t2_ : *default_instance_->t2_;
+}
+inline ::ige::Timestamp* SNTP::mutable_t2() {
+  set_has_t2();
+  if (t2_ == NULL) t2_ = new ::ige::Timestamp;
+  return t2_;
+}
+inline ::ige::Timestamp* SNTP::release_t2() {
+  clear_has_t2();
+  ::ige::Timestamp* temp = t2_;
+  t2_ = NULL;
+  return temp;
+}
+inline void SNTP::set_allocated_t2(::ige::Timestamp* t2) {
+  delete t2_;
+  t2_ = t2;
+  if (t2) {
+    set_has_t2();
+  } else {
+    clear_has_t2();
+  }
 }
 
 // -------------------------------------------------------------------

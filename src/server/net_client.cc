@@ -33,20 +33,27 @@ void net::client::process_message (connection* cxn, message* msg)
                                 ige::LoginSuccess server_auth;
                                 if (msg->read_buffer (&server_auth))
                                 {
-                                        console::t_notify ("CLIENT", "Server auth'ed us and gave us hash " + std::to_string (server_auth.login_hash ()));
+                                        console::t_notify ("CLIENT", "Server auth'ed us and gave us hash " + std::to_string ((uint64_t)server_auth.login_hash ()));
                                         server->hash = server_auth.login_hash ();
                                         server->state = CXN_SPECTATE;
 
-                                        time (&time_sentinel->epoch_t);
-                                        time_sentinel->epoch_tm = std::gmtime (&time_sentinel->epoch_t);
+                                        time_sentinel->epoch_tm = (tm*)malloc(sizeof(tm));
+
                                         time_sentinel->epoch_tm->tm_sec = server_auth.epoch().sec ();
                                         time_sentinel->epoch_tm->tm_min = server_auth.epoch().min ();
                                         time_sentinel->epoch_tm->tm_hour = server_auth.epoch().hour ();
                                         time_sentinel->epoch_tm->tm_mday = server_auth.epoch().day ();
                                         time_sentinel->epoch_tm->tm_mon = server_auth.epoch().mon ();
                                         time_sentinel->epoch_tm->tm_year = server_auth.epoch().year ();
+                                        time_sentinel->epoch_tm->tm_wday = 0;
+                                        time_sentinel->epoch_tm->tm_yday = 0;
+                                        time_sentinel->epoch_tm->tm_isdst = 0;
+
                                         time_sentinel->epoch_t = mktime (time_sentinel->epoch_tm);
+
+
                                         console::t_notify ("CLIENT", "Server EPOCH is " + std::to_string (time_sentinel->epoch_t));
+                                        time_sentinel->epoch = std::chrono::high_resolution_clock::from_time_t (time_sentinel->epoch_t);
                                         gclient = new game_client ();
                                         client_thread = new std::thread (&game_client::main, gclient);
                                 }
@@ -62,6 +69,24 @@ void net::client::process_message (connection* cxn, message* msg)
                                 }
                         }
                         break;
+
+                case MID(timestamp):
+                        {
+                                ige::SNTP time_sync;
+                                if (msg->read_buffer (&time_sync))
+                                {
+                                        int64_t t0 = time_sync.t0().time();
+                                        int64_t t1 = time_sync.t1().time();
+                                        int64_t t2 = time_sync.t2().time();
+                                        auto t3_m = time_sentinel->game_time ();
+                                        int64_t t3 = t3_m->time();
+                                        delete t3_m;
+                                        int64_t delta = ((t1 - t0) + (t2 - t3)) / 2;
+                                        time_sentinel->time_deltas.push_back (delta);
+                                }
+                        }
+                        break;
+
         }
 }
 

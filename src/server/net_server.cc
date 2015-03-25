@@ -36,6 +36,8 @@ void net::server::process_message (connection* cxn, message* msg)
                                         client_auth.set_login_hash (hash);
                                         
                                         ige::SendEpoch* server_epoch = new ige::SendEpoch;
+                                        console::t_notify ("SERVER", "Sending EPOCH " + std::to_string (time_sentinel->epoch_t));
+
                                         server_epoch->set_sec (time_sentinel->epoch_tm->tm_sec);
                                         server_epoch->set_min (time_sentinel->epoch_tm->tm_min);
                                         server_epoch->set_hour (time_sentinel->epoch_tm->tm_hour);
@@ -53,7 +55,25 @@ void net::server::process_message (connection* cxn, message* msg)
                                         }
                                 }
                         }
-                        break;
+                break;
+
+                case MID(timestamp):
+                        {
+                                ige::Timestamp time_sync;
+                                if (msg->read_buffer (&time_sync))
+                                {
+                                        ige::Timestamp* t0 = new ige::Timestamp;
+                                        t0->set_time (time_sync.time());
+                                        auto t1 = time_sentinel->game_time ();
+                                        auto t2 = time_sentinel->game_time ();
+                                        ige::SNTP sntp_packet;
+                                        sntp_packet.set_allocated_t0 (t0);
+                                        sntp_packet.set_allocated_t1 (t1);
+                                        sntp_packet.set_allocated_t2 (t2);
+                                        users[cxn]->send_message (&sntp_packet, MID(timestamp));
+                                }
+                        }
+                break;
         }
 }
 

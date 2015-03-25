@@ -36,6 +36,12 @@ message Timestamp {
         required int64 time = 1;
 }
 
+message SNTP {
+        required Timestamp t0 = 1;
+        required Timestamp t1 = 2;
+        required Timestamp t2 = 3;
+}
+
 message Geometry {
         required int32 id = 1;
         required int32 x = 2;

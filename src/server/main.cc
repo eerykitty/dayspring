@@ -21,7 +21,7 @@ int main (int argc, char** argv)
                 sentinel_thread.join ();
                 console::t_notify ("MAIN", "Sentinel thread safely joined.");
                 enet_thread.join ();
-                console::t_notify ("MAIN", "Networking thread safelty joined.");
+                console::t_notify ("MAIN", "Networking thread safely joined.");
         }
 
         console::notify ("have a nice day :3");

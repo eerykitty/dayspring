@@ -3,5 +3,3 @@ def notify (message) {
 }
 
 notify ("Game logic in ChaiScript started.")
-
-shutdown = true

@@ -10,6 +10,7 @@ sentinel::sentinel (unsigned int count)
         close_server = false;
         epoch_t = 0;
         epoch_tm = NULL;
+        time_delta = 0;
 }
 
 void sentinel::set_tick_interval (unsigned int count)
@@ -34,10 +35,13 @@ void sentinel::main ()
         start = se_clock::now ();
         start_t = se_clock::to_time_t (start);
         start_tm = std::gmtime (&start_t);
-        start_tm->tm_sec--; // since we're rounding away microseconds but still using a microsecond resolution clock we need to make sure this epoch be in the PAST.
-        epoch_t = start_t;
-        epoch_tm = start_tm;
-        start = se_clock::from_time_t (start_t);
+        //start_tm->tm_sec--; // since we're rounding away microseconds but still using a microsecond resolution clock we need to make sure this epoch be in the PAST.
+        epoch_tm = (std::tm*)malloc (sizeof (std::tm));
+        memcpy (epoch_tm, start_tm, sizeof (std::tm));
+        epoch_tm->tm_mday--;
+        epoch_t = mktime (epoch_tm);
+        start = se_clock::from_time_t (epoch_t);
+        epoch = se_clock::from_time_t (epoch_t);
        
         // this might not be necessary?
         //std::this_thread::sleep_until (se_clock::now () + std::chrono::seconds (1));
@@ -80,4 +84,13 @@ void sentinel::shutdown ()
 {
         std::lock_guard<std::mutex> lock (exit_mutex);
         close_server = true;
+}
+
+ige::Timestamp* sentinel::game_time ()
+{
+        ige::Timestamp* dsp_time = new ige::Timestamp;
+        auto dsp_dur = se_clock::now () - epoch;
+        auto dsp_ms = std::chrono::duration_cast<std::chrono::milliseconds> (dsp_dur);
+        dsp_time->set_time (dsp_ms.count () + time_delta);
+        return dsp_time;
 }

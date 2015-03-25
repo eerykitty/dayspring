@@ -39,6 +39,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* Timestamp_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Timestamp_reflection_ = NULL;
+const ::google::protobuf::Descriptor* SNTP_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  SNTP_reflection_ = NULL;
 const ::google::protobuf::Descriptor* Geometry_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Geometry_reflection_ = NULL;
@@ -160,7 +163,24 @@ void protobuf_AssignDesc_ige_5fsync_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Timestamp));
-  Geometry_descriptor_ = file->message_type(6);
+  SNTP_descriptor_ = file->message_type(6);
+  static const int SNTP_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SNTP, t0_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SNTP, t1_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SNTP, t2_),
+  };
+  SNTP_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      SNTP_descriptor_,
+      SNTP::default_instance_,
+      SNTP_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SNTP, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SNTP, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(SNTP));
+  Geometry_descriptor_ = file->message_type(7);
   static const int Geometry_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Geometry, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Geometry, x_),
@@ -177,7 +197,7 @@ void protobuf_AssignDesc_ige_5fsync_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Geometry));
-  Entity_descriptor_ = file->message_type(7);
+  Entity_descriptor_ = file->message_type(8);
   static const int Entity_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Entity, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Entity, x_),
@@ -194,7 +214,7 @@ void protobuf_AssignDesc_ige_5fsync_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Entity));
-  Item_descriptor_ = file->message_type(8);
+  Item_descriptor_ = file->message_type(9);
   static const int Item_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Item, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Item, x_),
@@ -211,7 +231,7 @@ void protobuf_AssignDesc_ige_5fsync_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Item));
-  Sync_descriptor_ = file->message_type(9);
+  Sync_descriptor_ = file->message_type(10);
   static const int Sync_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sync, geometries_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sync, entities_),
@@ -253,6 +273,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     Timestamp_descriptor_, &Timestamp::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    SNTP_descriptor_, &SNTP::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     Geometry_descriptor_, &Geometry::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     Entity_descriptor_, &Entity::default_instance());
@@ -277,6 +299,8 @@ void protobuf_ShutdownFile_ige_5fsync_2eproto() {
   delete LoginSuccess_reflection_;
   delete Timestamp::default_instance_;
   delete Timestamp_reflection_;
+  delete SNTP::default_instance_;
+  delete SNTP_reflection_;
   delete Geometry::default_instance_;
   delete Geometry_reflection_;
   delete Entity::default_instance_;
@@ -303,13 +327,15 @@ void protobuf_AddDesc_ige_5fsync_2eproto() {
     "\002(\005\022\014\n\004hour\030\003 \002(\005\022\013\n\003day\030\004 \002(\005\022\013\n\003mon\030\005 "
     "\002(\005\022\014\n\004year\030\006 \002(\005\"A\n\014LoginSuccess\022\022\n\nlog"
     "in_hash\030\001 \002(\003\022\035\n\005epoch\030\002 \002(\0132\016.ige.SendE"
-    "poch\"\031\n\tTimestamp\022\014\n\004time\030\001 \002(\003\",\n\010Geome"
-    "try\022\n\n\002id\030\001 \002(\005\022\t\n\001x\030\002 \002(\005\022\t\n\001y\030\003 \002(\005\"*\n"
-    "\006Entity\022\n\n\002id\030\001 \002(\005\022\t\n\001x\030\002 \002(\005\022\t\n\001y\030\003 \002("
-    "\005\"(\n\004Item\022\n\n\002id\030\001 \002(\005\022\t\n\001x\030\002 \002(\005\022\t\n\001y\030\003 "
-    "\002(\005\"b\n\004Sync\022!\n\ngeometries\030\001 \003(\0132\r.ige.Ge"
-    "ometry\022\035\n\010entities\030\002 \003(\0132\013.ige.Entity\022\030\n"
-    "\005items\030\003 \003(\0132\t.ige.Item", 623);
+    "poch\"\031\n\tTimestamp\022\014\n\004time\030\001 \002(\003\"Z\n\004SNTP\022"
+    "\032\n\002t0\030\001 \002(\0132\016.ige.Timestamp\022\032\n\002t1\030\002 \002(\0132"
+    "\016.ige.Timestamp\022\032\n\002t2\030\003 \002(\0132\016.ige.Timest"
+    "amp\",\n\010Geometry\022\n\n\002id\030\001 \002(\005\022\t\n\001x\030\002 \002(\005\022\t"
+    "\n\001y\030\003 \002(\005\"*\n\006Entity\022\n\n\002id\030\001 \002(\005\022\t\n\001x\030\002 \002"
+    "(\005\022\t\n\001y\030\003 \002(\005\"(\n\004Item\022\n\n\002id\030\001 \002(\005\022\t\n\001x\030\002"
+    " \002(\005\022\t\n\001y\030\003 \002(\005\"b\n\004Sync\022!\n\ngeometries\030\001 "
+    "\003(\0132\r.ige.Geometry\022\035\n\010entities\030\002 \003(\0132\013.i"
+    "ge.Entity\022\030\n\005items\030\003 \003(\0132\t.ige.Item", 715);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ige_sync.proto", &protobuf_RegisterTypes);
   Command::default_instance_ = new Command();
@@ -318,6 +344,7 @@ void protobuf_AddDesc_ige_5fsync_2eproto() {
   SendEpoch::default_instance_ = new SendEpoch();
   LoginSuccess::default_instance_ = new LoginSuccess();
   Timestamp::default_instance_ = new Timestamp();
+  SNTP::default_instance_ = new SNTP();
   Geometry::default_instance_ = new Geometry();
   Entity::default_instance_ = new Entity();
   Item::default_instance_ = new Item();
@@ -328,6 +355,7 @@ void protobuf_AddDesc_ige_5fsync_2eproto() {
   SendEpoch::default_instance_->InitAsDefaultInstance();
   LoginSuccess::default_instance_->InitAsDefaultInstance();
   Timestamp::default_instance_->InitAsDefaultInstance();
+  SNTP::default_instance_->InitAsDefaultInstance();
   Geometry::default_instance_->InitAsDefaultInstance();
   Entity::default_instance_->InitAsDefaultInstance();
   Item::default_instance_->InitAsDefaultInstance();
@@ -1994,6 +2022,319 @@ void Timestamp::Swap(Timestamp* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = Timestamp_descriptor_;
   metadata.reflection = Timestamp_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int SNTP::kT0FieldNumber;
+const int SNTP::kT1FieldNumber;
+const int SNTP::kT2FieldNumber;
+#endif  // !_MSC_VER
+
+SNTP::SNTP()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void SNTP::InitAsDefaultInstance() {
+  t0_ = const_cast< ::ige::Timestamp*>(&::ige::Timestamp::default_instance());
+  t1_ = const_cast< ::ige::Timestamp*>(&::ige::Timestamp::default_instance());
+  t2_ = const_cast< ::ige::Timestamp*>(&::ige::Timestamp::default_instance());
+}
+
+SNTP::SNTP(const SNTP& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void SNTP::SharedCtor() {
+  _cached_size_ = 0;
+  t0_ = NULL;
+  t1_ = NULL;
+  t2_ = NULL;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+SNTP::~SNTP() {
+  SharedDtor();
+}
+
+void SNTP::SharedDtor() {
+  if (this != default_instance_) {
+    delete t0_;
+    delete t1_;
+    delete t2_;
+  }
+}
+
+void SNTP::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* SNTP::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return SNTP_descriptor_;
+}
+
+const SNTP& SNTP::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_ige_5fsync_2eproto();
+  return *default_instance_;
+}
+
+SNTP* SNTP::default_instance_ = NULL;
+
+SNTP* SNTP::New() const {
+  return new SNTP;
+}
+
+void SNTP::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (has_t0()) {
+      if (t0_ != NULL) t0_->::ige::Timestamp::Clear();
+    }
+    if (has_t1()) {
+      if (t1_ != NULL) t1_->::ige::Timestamp::Clear();
+    }
+    if (has_t2()) {
+      if (t2_ != NULL) t2_->::ige::Timestamp::Clear();
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool SNTP::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required .ige.Timestamp t0 = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_t0()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(18)) goto parse_t1;
+        break;
+      }
+
+      // required .ige.Timestamp t1 = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_t1:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_t1()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(26)) goto parse_t2;
+        break;
+      }
+
+      // required .ige.Timestamp t2 = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_t2:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_t2()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void SNTP::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required .ige.Timestamp t0 = 1;
+  if (has_t0()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->t0(), output);
+  }
+
+  // required .ige.Timestamp t1 = 2;
+  if (has_t1()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      2, this->t1(), output);
+  }
+
+  // required .ige.Timestamp t2 = 3;
+  if (has_t2()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      3, this->t2(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* SNTP::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required .ige.Timestamp t0 = 1;
+  if (has_t0()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->t0(), target);
+  }
+
+  // required .ige.Timestamp t1 = 2;
+  if (has_t1()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        2, this->t1(), target);
+  }
+
+  // required .ige.Timestamp t2 = 3;
+  if (has_t2()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        3, this->t2(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int SNTP::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required .ige.Timestamp t0 = 1;
+    if (has_t0()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->t0());
+    }
+
+    // required .ige.Timestamp t1 = 2;
+    if (has_t1()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->t1());
+    }
+
+    // required .ige.Timestamp t2 = 3;
+    if (has_t2()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->t2());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void SNTP::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const SNTP* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const SNTP*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void SNTP::MergeFrom(const SNTP& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_t0()) {
+      mutable_t0()->::ige::Timestamp::MergeFrom(from.t0());
+    }
+    if (from.has_t1()) {
+      mutable_t1()->::ige::Timestamp::MergeFrom(from.t1());
+    }
+    if (from.has_t2()) {
+      mutable_t2()->::ige::Timestamp::MergeFrom(from.t2());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void SNTP::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void SNTP::CopyFrom(const SNTP& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool SNTP::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+
+  if (has_t0()) {
+    if (!this->t0().IsInitialized()) return false;
+  }
+  if (has_t1()) {
+    if (!this->t1().IsInitialized()) return false;
+  }
+  if (has_t2()) {
+    if (!this->t2().IsInitialized()) return false;
+  }
+  return true;
+}
+
+void SNTP::Swap(SNTP* other) {
+  if (other != this) {
+    std::swap(t0_, other->t0_);
+    std::swap(t1_, other->t1_);
+    std::swap(t2_, other->t2_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata SNTP::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = SNTP_descriptor_;
+  metadata.reflection = SNTP_reflection_;
   return metadata;
 }
 
