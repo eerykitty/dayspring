@@ -27,15 +27,15 @@ const ::google::protobuf::EnumDescriptor* Command_command_type_descriptor_ = NUL
 const ::google::protobuf::Descriptor* Login_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Login_reflection_ = NULL;
-const ::google::protobuf::Descriptor* LoginSuccess_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  LoginSuccess_reflection_ = NULL;
 const ::google::protobuf::Descriptor* SetFlag_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   SetFlag_reflection_ = NULL;
 const ::google::protobuf::Descriptor* SendEpoch_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   SendEpoch_reflection_ = NULL;
+const ::google::protobuf::Descriptor* LoginSuccess_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  LoginSuccess_reflection_ = NULL;
 const ::google::protobuf::Descriptor* Timestamp_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Timestamp_reflection_ = NULL;
@@ -93,22 +93,7 @@ void protobuf_AssignDesc_ige_5fsync_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Login));
-  LoginSuccess_descriptor_ = file->message_type(2);
-  static const int LoginSuccess_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoginSuccess, login_hash_),
-  };
-  LoginSuccess_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      LoginSuccess_descriptor_,
-      LoginSuccess::default_instance_,
-      LoginSuccess_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoginSuccess, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoginSuccess, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(LoginSuccess));
-  SetFlag_descriptor_ = file->message_type(3);
+  SetFlag_descriptor_ = file->message_type(2);
   static const int SetFlag_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SetFlag, flag_name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SetFlag, flag_value_),
@@ -124,7 +109,7 @@ void protobuf_AssignDesc_ige_5fsync_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(SetFlag));
-  SendEpoch_descriptor_ = file->message_type(4);
+  SendEpoch_descriptor_ = file->message_type(3);
   static const int SendEpoch_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SendEpoch, sec_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SendEpoch, min_),
@@ -144,6 +129,22 @@ void protobuf_AssignDesc_ige_5fsync_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(SendEpoch));
+  LoginSuccess_descriptor_ = file->message_type(4);
+  static const int LoginSuccess_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoginSuccess, login_hash_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoginSuccess, epoch_),
+  };
+  LoginSuccess_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      LoginSuccess_descriptor_,
+      LoginSuccess::default_instance_,
+      LoginSuccess_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoginSuccess, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoginSuccess, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(LoginSuccess));
   Timestamp_descriptor_ = file->message_type(5);
   static const int Timestamp_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Timestamp, time_),
@@ -244,11 +245,11 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     Login_descriptor_, &Login::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    LoginSuccess_descriptor_, &LoginSuccess::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     SetFlag_descriptor_, &SetFlag::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     SendEpoch_descriptor_, &SendEpoch::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    LoginSuccess_descriptor_, &LoginSuccess::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     Timestamp_descriptor_, &Timestamp::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -268,12 +269,12 @@ void protobuf_ShutdownFile_ige_5fsync_2eproto() {
   delete Command_reflection_;
   delete Login::default_instance_;
   delete Login_reflection_;
-  delete LoginSuccess::default_instance_;
-  delete LoginSuccess_reflection_;
   delete SetFlag::default_instance_;
   delete SetFlag_reflection_;
   delete SendEpoch::default_instance_;
   delete SendEpoch_reflection_;
+  delete LoginSuccess::default_instance_;
+  delete LoginSuccess_reflection_;
   delete Timestamp::default_instance_;
   delete Timestamp_reflection_;
   delete Geometry::default_instance_;
@@ -296,25 +297,26 @@ void protobuf_AddDesc_ige_5fsync_2eproto() {
     "\n\016ige_sync.proto\022\003ige\"V\n\007Command\022-\n\ncomm"
     "and_id\030\001 \002(\0162\031.ige.Command.command_type\""
     "\034\n\014command_type\022\014\n\010SHUTDOWN\020\000\"+\n\005Login\022\020"
-    "\n\010username\030\001 \002(\t\022\020\n\010password\030\002 \002(\t\"\"\n\014Lo"
-    "ginSuccess\022\022\n\nlogin_hash\030\001 \002(\003\"0\n\007SetFla"
-    "g\022\021\n\tflag_name\030\001 \002(\t\022\022\n\nflag_value\030\002 \002(\010"
-    "\"[\n\tSendEpoch\022\013\n\003sec\030\001 \002(\005\022\013\n\003min\030\002 \002(\005\022"
-    "\014\n\004hour\030\003 \002(\005\022\013\n\003day\030\004 \002(\005\022\013\n\003mon\030\005 \002(\005\022"
-    "\014\n\004year\030\006 \002(\005\"\031\n\tTimestamp\022\014\n\004time\030\001 \002(\003"
-    "\",\n\010Geometry\022\n\n\002id\030\001 \002(\005\022\t\n\001x\030\002 \002(\005\022\t\n\001y"
-    "\030\003 \002(\005\"*\n\006Entity\022\n\n\002id\030\001 \002(\005\022\t\n\001x\030\002 \002(\005\022"
-    "\t\n\001y\030\003 \002(\005\"(\n\004Item\022\n\n\002id\030\001 \002(\005\022\t\n\001x\030\002 \002("
-    "\005\022\t\n\001y\030\003 \002(\005\"b\n\004Sync\022!\n\ngeometries\030\001 \003(\013"
-    "2\r.ige.Geometry\022\035\n\010entities\030\002 \003(\0132\013.ige."
-    "Entity\022\030\n\005items\030\003 \003(\0132\t.ige.Item", 592);
+    "\n\010username\030\001 \002(\t\022\020\n\010password\030\002 \002(\t\"0\n\007Se"
+    "tFlag\022\021\n\tflag_name\030\001 \002(\t\022\022\n\nflag_value\030\002"
+    " \002(\010\"[\n\tSendEpoch\022\013\n\003sec\030\001 \002(\005\022\013\n\003min\030\002 "
+    "\002(\005\022\014\n\004hour\030\003 \002(\005\022\013\n\003day\030\004 \002(\005\022\013\n\003mon\030\005 "
+    "\002(\005\022\014\n\004year\030\006 \002(\005\"A\n\014LoginSuccess\022\022\n\nlog"
+    "in_hash\030\001 \002(\003\022\035\n\005epoch\030\002 \002(\0132\016.ige.SendE"
+    "poch\"\031\n\tTimestamp\022\014\n\004time\030\001 \002(\003\",\n\010Geome"
+    "try\022\n\n\002id\030\001 \002(\005\022\t\n\001x\030\002 \002(\005\022\t\n\001y\030\003 \002(\005\"*\n"
+    "\006Entity\022\n\n\002id\030\001 \002(\005\022\t\n\001x\030\002 \002(\005\022\t\n\001y\030\003 \002("
+    "\005\"(\n\004Item\022\n\n\002id\030\001 \002(\005\022\t\n\001x\030\002 \002(\005\022\t\n\001y\030\003 "
+    "\002(\005\"b\n\004Sync\022!\n\ngeometries\030\001 \003(\0132\r.ige.Ge"
+    "ometry\022\035\n\010entities\030\002 \003(\0132\013.ige.Entity\022\030\n"
+    "\005items\030\003 \003(\0132\t.ige.Item", 623);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ige_sync.proto", &protobuf_RegisterTypes);
   Command::default_instance_ = new Command();
   Login::default_instance_ = new Login();
-  LoginSuccess::default_instance_ = new LoginSuccess();
   SetFlag::default_instance_ = new SetFlag();
   SendEpoch::default_instance_ = new SendEpoch();
+  LoginSuccess::default_instance_ = new LoginSuccess();
   Timestamp::default_instance_ = new Timestamp();
   Geometry::default_instance_ = new Geometry();
   Entity::default_instance_ = new Entity();
@@ -322,9 +324,9 @@ void protobuf_AddDesc_ige_5fsync_2eproto() {
   Sync::default_instance_ = new Sync();
   Command::default_instance_->InitAsDefaultInstance();
   Login::default_instance_->InitAsDefaultInstance();
-  LoginSuccess::default_instance_->InitAsDefaultInstance();
   SetFlag::default_instance_->InitAsDefaultInstance();
   SendEpoch::default_instance_->InitAsDefaultInstance();
+  LoginSuccess::default_instance_->InitAsDefaultInstance();
   Timestamp::default_instance_->InitAsDefaultInstance();
   Geometry::default_instance_->InitAsDefaultInstance();
   Entity::default_instance_->InitAsDefaultInstance();
@@ -853,215 +855,6 @@ void Login::Swap(Login* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = Login_descriptor_;
   metadata.reflection = Login_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int LoginSuccess::kLoginHashFieldNumber;
-#endif  // !_MSC_VER
-
-LoginSuccess::LoginSuccess()
-  : ::google::protobuf::Message() {
-  SharedCtor();
-}
-
-void LoginSuccess::InitAsDefaultInstance() {
-}
-
-LoginSuccess::LoginSuccess(const LoginSuccess& from)
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void LoginSuccess::SharedCtor() {
-  _cached_size_ = 0;
-  login_hash_ = GOOGLE_LONGLONG(0);
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-LoginSuccess::~LoginSuccess() {
-  SharedDtor();
-}
-
-void LoginSuccess::SharedDtor() {
-  if (this != default_instance_) {
-  }
-}
-
-void LoginSuccess::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* LoginSuccess::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return LoginSuccess_descriptor_;
-}
-
-const LoginSuccess& LoginSuccess::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_ige_5fsync_2eproto();
-  return *default_instance_;
-}
-
-LoginSuccess* LoginSuccess::default_instance_ = NULL;
-
-LoginSuccess* LoginSuccess::New() const {
-  return new LoginSuccess;
-}
-
-void LoginSuccess::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    login_hash_ = GOOGLE_LONGLONG(0);
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool LoginSuccess::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int64 login_hash = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &login_hash_)));
-          set_has_login_hash();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void LoginSuccess::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // required int64 login_hash = 1;
-  if (has_login_hash()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->login_hash(), output);
-  }
-
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* LoginSuccess::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required int64 login_hash = 1;
-  if (has_login_hash()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->login_hash(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int LoginSuccess::ByteSize() const {
-  int total_size = 0;
-
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int64 login_hash = 1;
-    if (has_login_hash()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->login_hash());
-    }
-
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void LoginSuccess::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const LoginSuccess* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const LoginSuccess*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void LoginSuccess::MergeFrom(const LoginSuccess& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_login_hash()) {
-      set_login_hash(from.login_hash());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void LoginSuccess::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void LoginSuccess::CopyFrom(const LoginSuccess& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool LoginSuccess::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
-
-  return true;
-}
-
-void LoginSuccess::Swap(LoginSuccess* other) {
-  if (other != this) {
-    std::swap(login_hash_, other->login_hash_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata LoginSuccess::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = LoginSuccess_descriptor_;
-  metadata.reflection = LoginSuccess_reflection_;
   return metadata;
 }
 
@@ -1735,6 +1528,263 @@ void SendEpoch::Swap(SendEpoch* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = SendEpoch_descriptor_;
   metadata.reflection = SendEpoch_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int LoginSuccess::kLoginHashFieldNumber;
+const int LoginSuccess::kEpochFieldNumber;
+#endif  // !_MSC_VER
+
+LoginSuccess::LoginSuccess()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void LoginSuccess::InitAsDefaultInstance() {
+  epoch_ = const_cast< ::ige::SendEpoch*>(&::ige::SendEpoch::default_instance());
+}
+
+LoginSuccess::LoginSuccess(const LoginSuccess& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void LoginSuccess::SharedCtor() {
+  _cached_size_ = 0;
+  login_hash_ = GOOGLE_LONGLONG(0);
+  epoch_ = NULL;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+LoginSuccess::~LoginSuccess() {
+  SharedDtor();
+}
+
+void LoginSuccess::SharedDtor() {
+  if (this != default_instance_) {
+    delete epoch_;
+  }
+}
+
+void LoginSuccess::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* LoginSuccess::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return LoginSuccess_descriptor_;
+}
+
+const LoginSuccess& LoginSuccess::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_ige_5fsync_2eproto();
+  return *default_instance_;
+}
+
+LoginSuccess* LoginSuccess::default_instance_ = NULL;
+
+LoginSuccess* LoginSuccess::New() const {
+  return new LoginSuccess;
+}
+
+void LoginSuccess::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    login_hash_ = GOOGLE_LONGLONG(0);
+    if (has_epoch()) {
+      if (epoch_ != NULL) epoch_->::ige::SendEpoch::Clear();
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool LoginSuccess::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required int64 login_hash = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &login_hash_)));
+          set_has_login_hash();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(18)) goto parse_epoch;
+        break;
+      }
+
+      // required .ige.SendEpoch epoch = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_epoch:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_epoch()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void LoginSuccess::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required int64 login_hash = 1;
+  if (has_login_hash()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->login_hash(), output);
+  }
+
+  // required .ige.SendEpoch epoch = 2;
+  if (has_epoch()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      2, this->epoch(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* LoginSuccess::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required int64 login_hash = 1;
+  if (has_login_hash()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->login_hash(), target);
+  }
+
+  // required .ige.SendEpoch epoch = 2;
+  if (has_epoch()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        2, this->epoch(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int LoginSuccess::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required int64 login_hash = 1;
+    if (has_login_hash()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->login_hash());
+    }
+
+    // required .ige.SendEpoch epoch = 2;
+    if (has_epoch()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->epoch());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void LoginSuccess::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const LoginSuccess* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const LoginSuccess*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void LoginSuccess::MergeFrom(const LoginSuccess& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_login_hash()) {
+      set_login_hash(from.login_hash());
+    }
+    if (from.has_epoch()) {
+      mutable_epoch()->::ige::SendEpoch::MergeFrom(from.epoch());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void LoginSuccess::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void LoginSuccess::CopyFrom(const LoginSuccess& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool LoginSuccess::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+
+  if (has_epoch()) {
+    if (!this->epoch().IsInitialized()) return false;
+  }
+  return true;
+}
+
+void LoginSuccess::Swap(LoginSuccess* other) {
+  if (other != this) {
+    std::swap(login_hash_, other->login_hash_);
+    std::swap(epoch_, other->epoch_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata LoginSuccess::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = LoginSuccess_descriptor_;
+  metadata.reflection = LoginSuccess_reflection_;
   return metadata;
 }
 

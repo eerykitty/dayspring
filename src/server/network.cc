@@ -68,6 +68,9 @@ void net::peer::entry ()
         {
                 process ();
                 if (time_sentinel->close_server)
+                {
+                        console::t_notify ("PEER", "Shutdown signal received.");
                         return;
+                }
         }
 }

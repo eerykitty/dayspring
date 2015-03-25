@@ -25,6 +25,9 @@ class sentinel
                 std::mutex exit_mutex;
 
 	public:	
+                std::time_t epoch_t;
+                std::tm* epoch_tm;
+
                 void shutdown ();
                 bool close_server;
                 static std::string format_time (std::chrono::high_resolution_clock::time_point t);

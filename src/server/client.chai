@@ -1,0 +1,7 @@
+def notify (message) {
+        t_notify ("CHAI", message)
+}
+
+notify ("Game logic in ChaiScript started.")
+
+shutdown = true

@@ -28,6 +28,7 @@
 #include "mid.hh"
 
 #include "main.hh"
+#include "client.hh"
 
 namespace net {
 

@@ -36,6 +36,19 @@ void net::client::process_message (connection* cxn, message* msg)
                                         console::t_notify ("CLIENT", "Server auth'ed us and gave us hash " + std::to_string (server_auth.login_hash ()));
                                         server->hash = server_auth.login_hash ();
                                         server->state = CXN_SPECTATE;
+
+                                        time (&time_sentinel->epoch_t);
+                                        time_sentinel->epoch_tm = std::gmtime (&time_sentinel->epoch_t);
+                                        time_sentinel->epoch_tm->tm_sec = server_auth.epoch().sec ();
+                                        time_sentinel->epoch_tm->tm_min = server_auth.epoch().min ();
+                                        time_sentinel->epoch_tm->tm_hour = server_auth.epoch().hour ();
+                                        time_sentinel->epoch_tm->tm_mday = server_auth.epoch().day ();
+                                        time_sentinel->epoch_tm->tm_mon = server_auth.epoch().mon ();
+                                        time_sentinel->epoch_tm->tm_year = server_auth.epoch().year ();
+                                        time_sentinel->epoch_t = mktime (time_sentinel->epoch_tm);
+                                        console::t_notify ("CLIENT", "Server EPOCH is " + std::to_string (time_sentinel->epoch_t));
+                                        gclient = new game_client ();
+                                        client_thread = new std::thread (&game_client::main, gclient);
                                 }
                         }
                         break;

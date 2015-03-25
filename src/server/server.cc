@@ -7,6 +7,9 @@ sentinel::sentinel (unsigned int count)
 {
         time_sentinel = this;
         interval = count;
+        close_server = false;
+        epoch_t = 0;
+        epoch_tm = NULL;
 }
 
 void sentinel::set_tick_interval (unsigned int count)
@@ -28,15 +31,17 @@ std::string sentinel::format_time (std::chrono::high_resolution_clock::time_poin
 
 void sentinel::main ()
 {
-        close_server = false;
         start = se_clock::now ();
         start_t = se_clock::to_time_t (start);
         start_tm = std::gmtime (&start_t);
         start_tm->tm_sec--; // since we're rounding away microseconds but still using a microsecond resolution clock we need to make sure this epoch be in the PAST.
+        epoch_t = start_t;
+        epoch_tm = start_tm;
         start = se_clock::from_time_t (start_t);
        
         // this might not be necessary?
         //std::this_thread::sleep_until (se_clock::now () + std::chrono::seconds (1));
+        // def not necessary.
 
         console::t_notify ("SENTINEL", "started ticking");
 
@@ -54,11 +59,6 @@ void sentinel::main ()
                 /*
                  * Tock!
                  */
-                uint64_t id = 3816612501950020667;
-                ige::SetFlag flag_message;
-                flag_message.set_flag_name ("HELLOWORLD");
-                flag_message.set_flag_value (true);
-                net_host->send (id, &flag_message, MID(flag));
 
                 if (se_clock::now () < tp)
                 {
