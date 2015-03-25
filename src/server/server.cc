@@ -39,7 +39,7 @@ void sentinel::main ()
         epoch_tm = (std::tm*)malloc (sizeof (std::tm));
         memcpy (epoch_tm, start_tm, sizeof (std::tm));
 
-        epoch_tm->tm_sec = 0;//server_auth.epoch().sec ();
+        /*epoch_tm->tm_sec = 0;//server_auth.epoch().sec ();
         epoch_tm->tm_min = 0;//server_auth.epoch().min ();
         epoch_tm->tm_hour = 0;//server_auth.epoch().hour ();
         epoch_tm->tm_mday = 1;//server_auth.epoch().day ();
@@ -47,7 +47,7 @@ void sentinel::main ()
         epoch_tm->tm_year = 100;//server_auth.epoch().year ();
         epoch_tm->tm_wday = 0;
         epoch_tm->tm_yday = 0;
-        epoch_tm->tm_isdst = 0;
+        epoch_tm->tm_isdst = 0;*/
 
         epoch_t = mktime (epoch_tm);
         start = se_clock::from_time_t (epoch_t);

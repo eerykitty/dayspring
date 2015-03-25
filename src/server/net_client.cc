@@ -39,12 +39,12 @@ void net::client::process_message (connection* cxn, message* msg)
 
                                         time_sentinel->epoch_tm = (tm*)malloc(sizeof(tm));
 
-                                        time_sentinel->epoch_tm->tm_sec = 0;//server_auth.epoch().sec ();
-                                        time_sentinel->epoch_tm->tm_min = 0;//server_auth.epoch().min ();
-                                        time_sentinel->epoch_tm->tm_hour = 0;//server_auth.epoch().hour ();
-                                        time_sentinel->epoch_tm->tm_mday = 1;//server_auth.epoch().day ();
-                                        time_sentinel->epoch_tm->tm_mon = 0;//server_auth.epoch().mon ();
-                                        time_sentinel->epoch_tm->tm_year = 100;//server_auth.epoch().year ();
+                                        time_sentinel->epoch_tm->tm_sec = server_auth.epoch().sec ();
+                                        time_sentinel->epoch_tm->tm_min = server_auth.epoch().min ();
+                                        time_sentinel->epoch_tm->tm_hour = server_auth.epoch().hour ();
+                                        time_sentinel->epoch_tm->tm_mday = server_auth.epoch().day ();
+                                        time_sentinel->epoch_tm->tm_mon = server_auth.epoch().mon ();
+                                        time_sentinel->epoch_tm->tm_year = server_auth.epoch().year ();
                                         time_sentinel->epoch_tm->tm_wday = 0;
                                         time_sentinel->epoch_tm->tm_yday = 0;
                                         time_sentinel->epoch_tm->tm_isdst = 0;
