@@ -15,7 +15,7 @@ extern display* window;
 void game_client::main ()
 {
         net::client* host = static_cast<net::client*> (net_host);
-        for (int j = 0; j < 2; j++)
+        for (int j = 0; j < 1; j++)
         {
                 for (int i = 0; i < 50; i++)
                 {
@@ -33,15 +33,13 @@ void game_client::main ()
 
         for (;;)
         {
-                auto time_since_epoch = ((se_clock::now () + delay) - time_sentinel->epoch);
+                auto time_since_epoch = ((se_clock::now ()- time_sentinel->epoch) + delay);
                 auto ticks = time_since_epoch / tick;
                 ticks++;
                 auto time_till_next_tick = (tick * ticks);
                 auto tp = time_till_next_tick + time_sentinel->epoch - delay;
-
-                //auto tp = se_clock::now () + tick + time_delay;
-                console::t_notify ("CHAI", "tick! AT " + std::to_string (tp.time_since_epoch ().count ()));
-                console::t_notify ("CHAI", "server time is " + std::to_string ((time_till_next_tick + time_sentinel->epoch).time_since_epoch ().count ()));
+                auto next_server_tick = std::chrono::duration_cast<std::chrono::seconds>(tp - time_sentinel->epoch + delay);
+                console::t_notify ("CHAI", "Tick! " + std::to_string (next_server_tick.count ()));
                 std::this_thread::sleep_until (tp);
         }
 

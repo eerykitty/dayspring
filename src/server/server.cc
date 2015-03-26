@@ -118,6 +118,6 @@ ige::Timestamp* sentinel::game_time ()
         ige::Timestamp* dsp_time = new ige::Timestamp;
         auto dsp_dur = se_clock::now () - epoch;
         auto dsp_ms = std::chrono::duration_cast<std::chrono::milliseconds> (dsp_dur);
-        dsp_time->set_time (dsp_ms.count () + time_delta);
+        dsp_time->set_time (dsp_ms.count () /*+ time_delta*/);
         return dsp_time;
 }
