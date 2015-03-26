@@ -81,8 +81,10 @@ void net::client::process_message (connection* cxn, message* msg)
                                         int64_t t2 = time_sync.t2().time();
                                         auto t3_m = time_sentinel->game_time ();
                                         int64_t t3 = t3_m->time();
+                                        printf ("here are yo times t0 %li t1 %li t2 %li t3 %li\n", t0, t1, t2, t3);
                                         delete t3_m;
                                         int64_t delta = ((t1 - t0) + (t2 - t3)) / 2;
+                                        console::notify (std::to_string (delta));
                                         time_sentinel->time_deltas.push_back (delta);
                                 }
                         }
