@@ -11,7 +11,7 @@ int main (int argc, char** argv)
 {
         {
                 sentinel sent (1);
-                net::server server ("127.0.0.1", 1234);
+                net::server server ("192.168.254.7", 1234);
                 console::t_notify ("MAIN", "Starting sentinel.");
                 std::thread sentinel_thread (&sentinel::main, &sent);
 

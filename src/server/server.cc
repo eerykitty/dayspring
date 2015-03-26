@@ -79,7 +79,8 @@ void sentinel::main ()
 
                 //tp = epoch + (tick * this->interval) * ticks;
 
-                console::t_notify ("TICK", "TOCK AT " + std::to_string (tp.time_since_epoch ().count ()));
+                //console::t_notify ("TICK", "TOCK AT " + std::to_string (std::chrono::duration_cast<std::chrono::seconds>(se_clock::now () - epoch).count ()));
+		console::t_notify ("TOCK", "TICK AT " + std::to_string (std::chrono::duration_cast<std::chrono::seconds>(tp - epoch).count ()));
                 /*
                  * Tick!
                  */
