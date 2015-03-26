@@ -59,7 +59,7 @@ void sentinel::main ()
 
         console::t_notify ("SENTINEL", "started ticking");
 
-        auto tick = std::chrono::milliseconds (1000);
+        auto tick = std::chrono::milliseconds (10);
 
         for (;;)
         {
