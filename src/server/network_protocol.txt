@@ -1,0 +1,46 @@
+A description of the network protocol for DaySpring, specifically with regards
+to time synchronization;
+
+DaySpring relies on absolute time synchronization by use of a steady monotonic
+clock and an adjustable time offset so that the server can talk in terms of
+absolute time, allowing for a clever (?) solution to certain networking
+problems.
+
+The reality is of course much more complicated than this. The biggest
+complication is the fact that different OSes provide radically different
+timers and clocks, and by that I mean Microsoft Window's timers are
+notoriously crappy. Windows 8 is the first half decent OS in this regard,
+under the hood the OS kernel was tweaked so that high resolution timing is
+actually possible, and it's now possible to get high resolution steady
+timestamps, which is pretty bloody awesome. Unfortunately, this is *not* the
+case in older versions of windows, and assuming windows 8 is a dangerous
+assumption.
+
+So, since this is a game, we'll accept the potential for pretty spectatular
+failure on account of the system clock giving negative delta time (oh crap, casuality!)
+and accept that the clock is probably not terribly accurate. Now then, let's
+talk in terms of timestamps.
+
+Any sort of time synchronization must take place by exchange of timestamps. An
+epoch of the server start is given, and this is the reference. Further times
+are given in terms of seconds and milliseconds past epoch.
+
+client connects to server.
+server sends epoch in time_t.
+
+time synchronization procedure:
+
+client sends NTP timestamp request;
+server responds with NTP timestamp:
+        t_0 = time client send request
+        t_1 = time server received request
+        t_2 = time server returned request
+        t_3 = time client received return
+
+time stamps are in terms of seconds/milliseconds past server epoch.
+
+time offset is calculated as ((t_1 - t_0) + (t_2 - t_3))/2. this offset is
+stored in a special class, which keeps track of many of these offsets and
+subjects them (along with the RTDT) to statistical analysis and tries to
+determine the optimum offset which puts its own clock as close as possible to
+the server's clock.
