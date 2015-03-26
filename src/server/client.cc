@@ -29,10 +29,17 @@ void game_client::main ()
         console::t_notify ("CHAI", "Delta T is " + std::to_string (time_sentinel->time_delta));
 
         auto tick = std::chrono::milliseconds (1000);
+        auto delay = std::chrono::milliseconds (time_sentinel->time_delta);
 
         for (;;)
         {
-                auto tp = se_clock::now () + tick + time_delay;
+                auto time_since_epoch = (se_clock::now () - time_sentinel->epoch) + delay;
+                auto ticks = time_since_epoch / tick;
+                ticks++;
+                auto time_till_next_tick = (tick * ticks);
+                auto tp = time_till_next_tick + time_sentinel->epoch;
+
+                //auto tp = se_clock::now () + tick + time_delay;
                 console::t_notify ("CHAI", "tick!");
                 std::this_thread::sleep_until (tp);
         }

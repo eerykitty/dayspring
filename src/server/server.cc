@@ -38,7 +38,7 @@ void sentinel::main ()
         //start_tm->tm_sec--; // since we're rounding away microseconds but still using a microsecond resolution clock we need to make sure this epoch be in the PAST.
         epoch_tm = (std::tm*)malloc (sizeof (std::tm));
         memcpy (epoch_tm, start_tm, sizeof (std::tm));
-
+        epoch_tm->tm_mday--;
         /*epoch_tm->tm_sec = 0;//server_auth.epoch().sec ();
         epoch_tm->tm_min = 0;//server_auth.epoch().min ();
         epoch_tm->tm_hour = 0;//server_auth.epoch().hour ();
@@ -63,7 +63,23 @@ void sentinel::main ()
 
         for (;;)
         {
-                tp = se_clock::now () + (tick * this->interval);
+                // first we need to calculate the ticks since the epoch
+                auto time_since_epoch = se_clock::now () - epoch;
+                auto ticks = time_since_epoch / tick;
+                ticks++;
+                auto time_till_next_tick = tick * ticks;
+                tp = time_till_next_tick + epoch;
+                //console::notify (std::to_string (time_till_next_tick.count ()));
+                //exit (1);
+                //uint64_t ticks = (se_clock::now () - epoch).count () / (tick.count () * this->interval);
+                //console::t_notify ("TICK", std::to_string (ticks));
+                //ticks++;
+
+                //exit (1);
+
+                //tp = epoch + (tick * this->interval) * ticks;
+
+                console::t_notify ("TICK", "TOCK AT " + std::to_string (tp.time_since_epoch ().count ()));
                 /*
                  * Tick!
                  */
