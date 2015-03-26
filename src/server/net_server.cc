@@ -37,7 +37,7 @@ void net::server::process_message (connection* cxn, message* msg)
                                         
                                         ige::SendEpoch* server_epoch = new ige::SendEpoch;
                                         console::t_notify ("SERVER", "Sending EPOCH " + std::to_string (time_sentinel->epoch_t));
-
+                                        printf ("%s\n", ctime (&time_sentinel->epoch_t));
                                         server_epoch->set_sec (time_sentinel->epoch_tm->tm_sec);
                                         server_epoch->set_min (time_sentinel->epoch_tm->tm_min);
                                         server_epoch->set_hour (time_sentinel->epoch_tm->tm_hour);

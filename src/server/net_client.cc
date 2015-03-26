@@ -53,6 +53,7 @@ void net::client::process_message (connection* cxn, message* msg)
 
 
                                         console::t_notify ("CLIENT", "Server EPOCH is " + std::to_string (time_sentinel->epoch_t));
+                                        printf ("%s\n", ctime (&time_sentinel->epoch_t));
                                         time_sentinel->epoch = std::chrono::high_resolution_clock::from_time_t (time_sentinel->epoch_t);
                                         gclient = new game_client ();
                                         client_thread = new std::thread (&game_client::main, gclient);
