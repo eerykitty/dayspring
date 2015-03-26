@@ -15,20 +15,20 @@ extern display* window;
 void game_client::main ()
 {
         net::client* host = static_cast<net::client*> (net_host);
-        for (int j = 0; j < 1; j++)
+        for (int j = 0; j < 2; j++)
         {
-                for (int i = 0; i < 50; i++)
+                for (int i = 0; i < 500; i++)
                 {
                         host->send (0, time_sentinel->game_time (), MID(timestamp));
                 }
                 sleep (2);
-                time_sentinel->time_delta = std::accumulate (time_sentinel->time_deltas.begin (), time_sentinel->time_deltas.end (), 0) / time_sentinel->time_deltas.size ();
+                double sum = std::accumulate(time_sentinel->time_deltas.begin(), time_sentinel->time_deltas.end(), 0.0);
+                time_sentinel->time_delta = sum / time_sentinel->time_deltas.size();
         }
 
-        std::chrono::milliseconds time_delay (time_sentinel->time_delta);
         console::t_notify ("CHAI", "Delta T is " + std::to_string (time_sentinel->time_delta));
 
-        auto tick = std::chrono::milliseconds (1000);
+        auto tick = std::chrono::milliseconds (10);
         auto delay = std::chrono::milliseconds (time_sentinel->time_delta);
 
         for (;;)
@@ -37,10 +37,11 @@ void game_client::main ()
                 auto ticks = time_since_epoch / tick;
                 ticks++;
                 auto time_till_next_tick = (tick * ticks);
-                auto tp = time_till_next_tick + time_sentinel->epoch - delay;
-                auto next_server_tick = std::chrono::duration_cast<std::chrono::seconds>(tp - time_sentinel->epoch + delay);
+                auto tp = (time_till_next_tick + time_sentinel->epoch) - delay;
+                auto next_server_tick = std::chrono::duration_cast<std::chrono::milliseconds>(tp - time_sentinel->epoch + delay);
+                console::t_notify ("CHAI", "waiting until " + std::to_string ((next_server_tick - delay).count ()));
                 console::t_notify ("CHAI", "Tick! " + std::to_string (next_server_tick.count ()));
-                std::this_thread::sleep_until (tp);
+                std::this_thread::sleep_until ((next_server_tick - delay) + time_sentinel->epoch);
         }
 
         //chaiscript::ChaiScript chai (chaiscript::Std_Lib::library ());

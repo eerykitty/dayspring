@@ -69,18 +69,7 @@ void sentinel::main ()
                 ticks++;
                 auto time_till_next_tick = tick * ticks;
                 tp = time_till_next_tick + epoch;
-                //console::notify (std::to_string (time_till_next_tick.count ()));
-                //exit (1);
-                //uint64_t ticks = (se_clock::now () - epoch).count () / (tick.count () * this->interval);
-                //console::t_notify ("TICK", std::to_string (ticks));
-                //ticks++;
 
-                //exit (1);
-
-                //tp = epoch + (tick * this->interval) * ticks;
-
-                //console::t_notify ("TICK", "TOCK AT " + std::to_string (std::chrono::duration_cast<std::chrono::seconds>(se_clock::now () - epoch).count ()));
-		console::t_notify ("TOCK", "TICK AT " + std::to_string (std::chrono::duration_cast<std::chrono::seconds>(tp - epoch).count ()));
                 /*
                  * Tick!
                  */
