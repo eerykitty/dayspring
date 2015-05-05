@@ -26,6 +26,8 @@ class sentinel
                 std::mutex exit_mutex;
 
 	public:	
+                std::chrono::high_resolution_clock::time_point current_tick, next_tick;
+                
                 std::vector<int64_t> time_deltas;
                 int64_t time_delta;
                 

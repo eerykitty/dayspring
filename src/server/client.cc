@@ -37,7 +37,7 @@ void game_client::main ()
         chaiscript::ChaiScript chai (chaiscript::Std_Lib::library ());
         chai.add (chaiscript::fun(&console::t_notify), "t_notify");
 
-        chai.add (chaiscript::fun(&IMG_Load), "IMG_Load");
+        /*chai.add (chaiscript::fun(&IMG_Load), "IMG_Load");
         chai.add (chaiscript::fun(&SDL_CreateTextureFromSurface), "create_texture_from_surface");
         chai.add (chaiscript::fun(&SDL_FreeSurface), "free_surface");
         chai.add (chaiscript::fun(&SDL_DestroyTexture), "destroy_texture");
@@ -45,7 +45,7 @@ void game_client::main ()
         chai.add (chaiscript::fun(&SDL_CreateWindow), "create_window");
         chai.add (chaiscript::fun(&SDL_CreateRenderer), "create_renderer");
         chai.add (chaiscript::fun(&SDL_SetRenderDrawColor), "set_render_draw_color");
-        chai.add (chaiscript::fun(&SDL_RenderPresent), "render_present");
+        chai.add (chaiscript::fun(&SDL_RenderPresent), "render_present");*/
 
         //chai.add (chaiscript::var(net_host), "net");
         //chai.add (chaiscript::var(&time_sentinel->close_server), "shutdown");
@@ -55,7 +55,7 @@ void game_client::main ()
 
         for (;;)
         {
-                auto time_since_epoch = ((se_clock::now ()- time_sentinel->epoch) + delay);
+                auto time_since_epoch = ((se_clock::now () - time_sentinel->epoch) + delay);
                 auto ticks = time_since_epoch / tick;
                 ticks++;
                 auto time_till_next_tick = (tick * ticks);

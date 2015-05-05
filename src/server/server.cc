@@ -3,6 +3,9 @@
 
 #include "main.hh"
 
+#include "chaiscript/chaiscript.hpp"
+#include "chaiscript/chaiscript_stdlib.hpp"
+
 sentinel::sentinel (unsigned int count)
 {
         time_sentinel = this;
@@ -61,6 +64,12 @@ void sentinel::main ()
 
         auto tick = std::chrono::milliseconds (500);
 
+        chaiscript::ChaiScript chai (chaiscript::Std_Lib::library ());
+        net::server* host = static_cast<net::server*> (net_host);
+        chai.add (chaiscript::var(host), "server");
+
+        chai.eval_file ("server_chai/init.chai");
+
         for (;;)
         {
                 // first we need to calculate the ticks since the epoch
@@ -68,13 +77,15 @@ void sentinel::main ()
                 auto ticks = time_since_epoch / tick;
                 ticks++;
                 auto time_till_next_tick = tick * ticks;
+                current_tick = (tick * (ticks - 1)) + epoch;
+                next_tick = time_till_next_tick + epoch;
                 tp = time_till_next_tick + epoch;
 
                 /*
                  * Tick!
                  */
 
-                // here we should process the network queue.
+                chai.eval_file ("server_chai/main.chai");
 
                 /*
                  * Tock!
@@ -91,6 +102,7 @@ void sentinel::main ()
 
                         console::t_notify ("SENTINEL", "tick/tock off schedule; system overloaded or clock changed. Go fix it."); 
                 }
+                chai.eval_file ("server_chai/tick.chai");
                 if (close_server)
                         return;
         }
