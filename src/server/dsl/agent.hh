@@ -9,8 +9,9 @@
 class agent {
         private:
                 std::unordered_map <ns_int_t, std::shared_ptr<reagent> > reagents;
-                std::unordered_map <ns_int_t, std::shared_ptr<attribute> > attributes;
                 std::unordered_map <ns_int_t, std::shared_ptr<action> > actions;
+
+                attribute_layer attributes;
         public:
                 int64_t guid;
 };

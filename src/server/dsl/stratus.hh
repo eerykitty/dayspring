@@ -8,13 +8,10 @@
 
 class stratus {
         private:
-                element_state cache;
                 std::list<element> elements;
         public:
-                stratus ();
-                std::list<element>::iterator add (element_operation op, element_state state);
-                int64_t evaluate ();
-                std::string evaluate ();
-
-                bool dirty;
+                std::list<element>::iterator add (element elem);
+                void remove (std::list<element>::iterator elem);
+                void modify (std::list<element>::iterator elem, element state);
+                float evaluate (float base = 0);
 };

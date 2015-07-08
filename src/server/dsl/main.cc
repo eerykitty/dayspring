@@ -3,4 +3,5 @@
 int main ()
 {
         agent test;
+        reagent test_reagent;
 }

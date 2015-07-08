@@ -11,13 +11,10 @@ enum element_operation {
         };
 
 // basic element state:
-struct element_state {
-        int64_t integer;
-        std::shared_ptr <std::string> string;
-};
-
 struct element {
-        element element (element_operation operation, element_state state);
+        element ();
+        element (element_operation operation, float state);
+
         element_operation operation;
-        element_state state;
+        float num;
 };
